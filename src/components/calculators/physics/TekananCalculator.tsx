@@ -3,6 +3,7 @@
 import { CalculatorLayout } from "@/components/calculator/CalculatorLayout";
 import { ExampleBlock } from "@/components/calculator/ExampleBlock";
 import { FormulaBlock } from "@/components/calculator/FormulaBlock";
+import { GuidanceBlock } from "@/components/calculator/GuidanceBlock";
 import { ResultCard } from "@/components/calculator/ResultCard";
 import { SelectField } from "@/components/calculator/SelectField";
 import { StepsList, type StepItem } from "@/components/calculator/StepsList";
@@ -240,6 +241,8 @@ export default function TekananCalculator(props: {
   }
 
   const examplePressure = calculatePressure(500, 0.25);
+  const exampleForce = forceFromPressure(2000, 0.25);
+  const exampleArea = areaFromPressure(2000, 500);
 
   return (
     <CalculatorLayout
@@ -267,10 +270,61 @@ export default function TekananCalculator(props: {
         />
       }
       example={
-        <ExampleBlock
-          problem="Gaya 500 N bekerja pada luas bidang 0,25 m². Berapa tekanannya?"
-          detail="P = F ÷ A = 500 N ÷ 0,25 m²."
-          answer={`${formatNumber(examplePressure)} Pa (${formatNumber(examplePressure / 1000)} kPa)`}
+        <div className="grid gap-4 md:grid-cols-2">
+          <ExampleBlock
+            problem="Gaya 500 N bekerja pada luas bidang 0,25 m². Berapa tekanannya?"
+            detail="P = F ÷ A = 500 N ÷ 0,25 m²."
+            answer={`${formatNumber(examplePressure)} Pa (${formatNumber(examplePressure / 1000)} kPa)`}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                mode: "pressure",
+                force: "500",
+                area: "0.25",
+              })
+            }
+          />
+          <ExampleBlock
+            problem="Tekanan 2.000 Pa bekerja pada luas 0,25 m². Berapa gayanya?"
+            detail="F = P × A = 2.000 Pa × 0,25 m²."
+            answer={`${formatNumber(exampleForce)} N`}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                mode: "force",
+                pressure: "2000",
+                area: "0.25",
+              })
+            }
+          />
+          <ExampleBlock
+            problem="Gaya 500 N menghasilkan tekanan 2.000 Pa. Berapa luas bidang tekan?"
+            detail="A = F ÷ P = 500 N ÷ 2.000 Pa."
+            answer={`${formatNumber(exampleArea)} m²`}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                mode: "area",
+                force: "500",
+                pressure: "2000",
+              })
+            }
+          />
+        </div>
+      }
+      notes={
+        <GuidanceBlock
+          mistakes={[
+            "Memasukkan luas nol saat mencari tekanan, yang membuat pembagian tidak terdefinisi.",
+            "Memakai satuan cm² tanpa mengubahnya ke m²; 1 cm² = 0,0001 m², bukan 0,01 m².",
+            "Menyamakan tekanan dengan gaya, padahal gaya yang sama pada luas lebih kecil menghasilkan tekanan lebih besar.",
+            "Mengabaikan luas kontak sebenarnya, misalnya memakai luas seluruh permukaan benda.",
+          ]}
+          tips={[
+            "Gunakan P = F ÷ A dan periksa bahwa satuan akhirnya pascal (N/m²).",
+            "Ubah luas ke m² lebih dulu: bagi nilai cm² dengan 10.000.",
+            "Untuk tekanan hidrostatis, rumusnya berbeda, yaitu P = ρ × g × h, dan tidak bergantung pada luas.",
+          ]}
         />
       }
     >

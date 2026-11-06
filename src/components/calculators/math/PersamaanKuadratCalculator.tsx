@@ -3,6 +3,7 @@
 import { CalculatorLayout } from "@/components/calculator/CalculatorLayout";
 import { ExampleBlock } from "@/components/calculator/ExampleBlock";
 import { FormulaBlock } from "@/components/calculator/FormulaBlock";
+import { GuidanceBlock } from "@/components/calculator/GuidanceBlock";
 import { NumberField } from "@/components/calculator/NumberField";
 import { ResultCard } from "@/components/calculator/ResultCard";
 import { StepsList } from "@/components/calculator/StepsList";
@@ -148,6 +149,8 @@ export default function PersamaanKuadratCalculator(props: {
   }
 
   const example = solveQuadratic(1, -5, 6);
+  const exampleComplex = solveQuadratic(1, 2, 5);
+  const exampleDouble = solveQuadratic(1, -6, 9);
 
   return (
     <CalculatorLayout
@@ -177,10 +180,46 @@ export default function PersamaanKuadratCalculator(props: {
         />
       }
       example={
-        <ExampleBlock
-          problem="Selesaikan x² − 5x + 6 = 0."
-          detail={`Koefisien: a = 1, b = −5, c = 6. Diskriminan D = (−5)² − 4(1)(6) = 25 − 24 = 1. Akar: x = (5 ± 1) ÷ 2.`}
-          answer={rootsDescription(example)}
+        <div className="grid gap-4 md:grid-cols-2">
+          <ExampleBlock
+            problem="Selesaikan x² − 5x + 6 = 0."
+            detail="Koefisien: a = 1, b = −5, c = 6. Diskriminan D = (−5)² − 4(1)(6) = 25 − 24 = 1. Akar: x = (5 ± 1) ÷ 2."
+            answer={rootsDescription(example)}
+            onUse={() =>
+              calculator.setMany({ ...INITIAL, a: "1", b: "-5", c: "6" })
+            }
+          />
+          <ExampleBlock
+            problem="Selesaikan x² + 2x + 5 = 0."
+            detail="D = 2² − 4(1)(5) = 4 − 20 = −16. Karena D negatif, akar berupa bilangan kompleks konjugat."
+            answer={rootsDescription(exampleComplex)}
+            onUse={() =>
+              calculator.setMany({ ...INITIAL, a: "1", b: "2", c: "5" })
+            }
+          />
+          <ExampleBlock
+            problem="Selesaikan x² − 6x + 9 = 0."
+            detail="D = (−6)² − 4(1)(9) = 36 − 36 = 0, sehingga akar real kembar x = 3."
+            answer={rootsDescription(exampleDouble)}
+            onUse={() =>
+              calculator.setMany({ ...INITIAL, a: "1", b: "-6", c: "9" })
+            }
+          />
+        </div>
+      }
+      notes={
+        <GuidanceBlock
+          mistakes={[
+            "Memasukkan a = 0. Jika a nol, persamaan menjadi linear, bukan kuadrat, sehingga rumus abc tidak berlaku.",
+            "Salah tanda saat b negatif: untuk x² − 5x + 6, b = −5 sehingga −b = +5, bukan −5.",
+            "Mengabaikan diskriminan dan tetap menulis akar real padahal D < 0 sehingga solusinya kompleks.",
+            "Menyimpulkan akar kembar berarti tidak ada solusi; D = 0 justru memberi satu solusi real yang dihitung dua kali.",
+          ]}
+          tips={[
+            "Substitusikan akar yang diperoleh kembali ke persamaan asli; hasil harus nol.",
+            "Gunakan hubungan x₁ + x₂ = −b/a dan x₁ · x₂ = c/a sebagai pemeriksaan cepat.",
+            "Titik puncak parabola berada di x = −b ÷ 2a, yang juga menjadi titik tengah kedua akar real.",
+          ]}
         />
       }
     >

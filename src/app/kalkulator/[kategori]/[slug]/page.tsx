@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CalculatorRenderer } from "@/components/calculators/CalculatorRenderer";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { getArticlesForCalculator } from "@/data/articles";
 import {
   calculators,
   getCalculator,
@@ -57,6 +58,8 @@ export default function CalculatorPage({ params }: CalculatorPageProps) {
     notFound();
   }
 
+  const relatedArticles = getArticlesForCalculator(kategori, slug);
+
   return (
     <div>
       <Breadcrumbs
@@ -76,6 +79,35 @@ export default function CalculatorPage({ params }: CalculatorPageProps) {
         }}
         categoryName={getCategoryName(calculator.category)}
       />
+
+      {relatedArticles.length > 0 ? (
+        <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-sm font-semibold uppercase tracking-wider text-slate-500">
+            Artikel terkait
+          </h2>
+          <p className="mt-2 text-sm leading-relaxed text-slate-600">
+            Pelajari konsep di balik kalkulator ini sebelum atau sesudah
+            menghitung.
+          </p>
+          <ul className="mt-4 space-y-2">
+            {relatedArticles.map((article) => (
+              <li key={article.slug}>
+                <Link
+                  href={`/artikel/${article.slug}`}
+                  className="flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3 text-sm transition hover:border-indigo-200 hover:bg-indigo-50/40"
+                >
+                  <span className="font-medium text-slate-800">
+                    {article.title}
+                  </span>
+                  <span className="shrink-0 text-xs font-semibold text-indigo-600">
+                    Baca →
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
 
       <div className="mt-8">
         <Link

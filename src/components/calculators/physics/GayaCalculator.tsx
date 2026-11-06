@@ -3,6 +3,7 @@
 import { CalculatorLayout } from "@/components/calculator/CalculatorLayout";
 import { ExampleBlock } from "@/components/calculator/ExampleBlock";
 import { FormulaBlock } from "@/components/calculator/FormulaBlock";
+import { GuidanceBlock } from "@/components/calculator/GuidanceBlock";
 import { ResultCard } from "@/components/calculator/ResultCard";
 import { SelectField } from "@/components/calculator/SelectField";
 import { StepsList, type StepItem } from "@/components/calculator/StepsList";
@@ -241,6 +242,8 @@ export default function GayaCalculator(props: {
   }
 
   const exampleForce = calculateForce(1200, 2);
+  const exampleMass = massFromForce(2400, 2);
+  const exampleAcceleration = accelerationFromForce(2400, 1200);
 
   return (
     <CalculatorLayout
@@ -268,10 +271,61 @@ export default function GayaCalculator(props: {
         />
       }
       example={
-        <ExampleBlock
-          problem="Berapa gaya yang diperlukan untuk mempercepat benda 1.200 kg sebesar 2 m/s²?"
-          detail={`F = m × a = 1.200 kg × 2 m/s².`}
-          answer={`${formatNumber(exampleForce)} N (${formatNumber(exampleForce / 1000)} kN)`}
+        <div className="grid gap-4 md:grid-cols-2">
+          <ExampleBlock
+            problem="Berapa gaya yang diperlukan untuk mempercepat benda 1.200 kg sebesar 2 m/s²?"
+            detail="F = m × a = 1.200 kg × 2 m/s²."
+            answer={`${formatNumber(exampleForce)} N (${formatNumber(exampleForce / 1000)} kN)`}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                mode: "force",
+                mass: "1200",
+                acceleration: "2",
+              })
+            }
+          />
+          <ExampleBlock
+            problem="Gaya 2.400 N bekerja pada benda dengan percepatan 2 m/s². Berapa massa benda?"
+            detail="m = F ÷ a = 2.400 N ÷ 2 m/s²."
+            answer={`${formatNumber(exampleMass)} kg`}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                mode: "mass",
+                force: "2400",
+                acceleration: "2",
+              })
+            }
+          />
+          <ExampleBlock
+            problem="Gaya 2.400 N bekerja pada benda bermassa 1.200 kg. Berapa percepatannya?"
+            detail="a = F ÷ m = 2.400 N ÷ 1.200 kg."
+            answer={`${formatNumber(exampleAcceleration)} m/s²`}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                mode: "acceleration",
+                force: "2400",
+                mass: "1200",
+              })
+            }
+          />
+        </div>
+      }
+      notes={
+        <GuidanceBlock
+          mistakes={[
+            "Menukar massa dengan berat. Massa diukur dalam kg, sedangkan berat adalah gaya dalam newton.",
+            "Lupa mengubah gram atau sentimeter ke satuan SI sebelum menghitung, sehingga hasil meleset beberapa pangkat.",
+            "Memasukkan massa nol saat mencari percepatan, yang membuat pembagian tidak terdefinisi.",
+            "Menjumlahkan gaya yang arahnya berlawanan tanpa memperhatikan tandanya.",
+          ]}
+          tips={[
+            "Gunakan F = m × a untuk memeriksa hasil; jika massa 1.200 kg dan percepatan 2 m/s², gayanya 2.400 N.",
+            "Untuk beberapa gaya, hitung resultan lebih dulu dengan memperhatikan arah masing-masing.",
+            "Periksa satuan akhir: kg × m/s² selalu sama dengan newton.",
+          ]}
         />
       }
     >

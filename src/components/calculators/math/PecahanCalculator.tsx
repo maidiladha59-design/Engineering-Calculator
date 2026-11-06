@@ -3,6 +3,7 @@
 import { CalculatorLayout } from "@/components/calculator/CalculatorLayout";
 import { ExampleBlock } from "@/components/calculator/ExampleBlock";
 import { FormulaBlock } from "@/components/calculator/FormulaBlock";
+import { GuidanceBlock } from "@/components/calculator/GuidanceBlock";
 import { NumberField } from "@/components/calculator/NumberField";
 import { ResultCard } from "@/components/calculator/ResultCard";
 import { SelectField } from "@/components/calculator/SelectField";
@@ -11,7 +12,6 @@ import { VariableTable } from "@/components/calculator/VariableTable";
 import { useCalculatorState } from "@/components/calculator/useCalculatorState";
 import { formatNumber } from "@/lib/format";
 import {
-  addFractions,
   fractionToDecimal,
   fractionToMixed,
   fractionToText,
@@ -193,9 +193,21 @@ export default function PecahanCalculator(props: {
     });
   }
 
-  const exampleA: Fraction = { numerator: 1, denominator: 2 };
-  const exampleB: Fraction = { numerator: 1, denominator: 3 };
-  const exampleResult = addFractions(exampleA, exampleB);
+  const exampleAdd = operateFractions(
+    { numerator: 1, denominator: 2 },
+    { numerator: 1, denominator: 3 },
+    "+",
+  );
+  const exampleMultiply = operateFractions(
+    { numerator: 3, denominator: 4 },
+    { numerator: 2, denominator: 5 },
+    "×",
+  );
+  const exampleSubtract = operateFractions(
+    { numerator: 7, denominator: 4 },
+    { numerator: 1, denominator: 2 },
+    "-",
+  );
 
   return (
     <CalculatorLayout
@@ -228,10 +240,67 @@ export default function PecahanCalculator(props: {
         />
       }
       example={
-        <ExampleBlock
-          problem="Hitung 1/2 + 1/3."
-          detail={`Penyebut bersama 6: 1/2 = 3/6 dan 1/3 = 2/6. Maka 3/6 + 2/6 = 5/6.`}
-          answer={`${fractionToText(exampleResult)} (${formatNumber(fractionToDecimal(exampleResult))})`}
+        <div className="grid gap-4 md:grid-cols-2">
+          <ExampleBlock
+            problem="Hitung 1/2 + 1/3."
+            detail="Penyebut bersama 6: 1/2 = 3/6 dan 1/3 = 2/6. Maka 3/6 + 2/6 = 5/6."
+            answer={`${fractionToText(exampleAdd)} (${formatNumber(fractionToDecimal(exampleAdd))})`}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                numerator1: "1",
+                denominator1: "2",
+                numerator2: "1",
+                denominator2: "3",
+                operator: "+",
+              })
+            }
+          />
+          <ExampleBlock
+            problem="Hitung 3/4 × 2/5."
+            detail="Kalikan pembilang 3 × 2 = 6 dan penyebut 4 × 5 = 20, lalu sederhanakan 6/20 = 3/10."
+            answer={`${fractionToText(exampleMultiply)} (${formatNumber(fractionToDecimal(exampleMultiply))})`}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                numerator1: "3",
+                denominator1: "4",
+                numerator2: "2",
+                denominator2: "5",
+                operator: "×",
+              })
+            }
+          />
+          <ExampleBlock
+            problem="Hitung 7/4 − 1/2."
+            detail="Penyebut bersama 4: 7/4 − 2/4 = 5/4, yang juga ditulis sebagai pecahan campuran 1 1/4."
+            answer={`${fractionToText(exampleSubtract)} (${formatNumber(fractionToDecimal(exampleSubtract))})`}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                numerator1: "7",
+                denominator1: "4",
+                numerator2: "1",
+                denominator2: "2",
+                operator: "-",
+              })
+            }
+          />
+        </div>
+      }
+      notes={
+        <GuidanceBlock
+          mistakes={[
+            "Menjumlahkan penyebut saat menambah pecahan. Penyebut harus disamakan, bukan dijumlahkan.",
+            "Membagi dua pecahan tanpa membalik pecahan kedua terlebih dahulu.",
+            "Lupa menyederhanakan hasil, sehingga jawaban belum dalam bentuk paling sederhana.",
+            "Memakai penyebut nol atau membagi dengan pembilang nol tanpa memeriksa aturan pembagian pecahan.",
+          ]}
+          tips={[
+            "Samakan penyebut dengan perkalian silang, lalu sederhanakan hasilnya menggunakan FPB.",
+            "Pecahan tidak wajar dapat ditulis sebagai pecahan campuran agar lebih mudah dibaca.",
+            "Periksa hasil dengan mengubah pecahan ke desimal dan membandingkan nilainya.",
+          ]}
         />
       }
     >

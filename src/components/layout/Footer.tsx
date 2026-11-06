@@ -69,6 +69,14 @@ export function Footer() {
                 Kalkulator fisika
               </Link>
             </li>
+            <li>
+              <Link
+                href="/artikel"
+                className="text-slate-600 transition hover:text-indigo-700"
+              >
+                Artikel edukasi
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

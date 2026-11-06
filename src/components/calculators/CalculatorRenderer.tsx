@@ -172,6 +172,10 @@ const HeksadesimalCalculator = dynamic(
 const OktalCalculator = dynamic(() => import("./binary/OktalCalculator"), {
   loading,
 });
+const UnitConverterCalculator = dynamic(
+  () => import("./conversion/UnitConverterCalculator"),
+  { loading },
+);
 
 const REGISTRY: Record<string, ComponentType<CalculatorComponentProps>> = {
   dasar: DasarCalculator,
@@ -217,6 +221,16 @@ const REGISTRY: Record<string, ComponentType<CalculatorComponentProps>> = {
   "konversi-biner-desimal": KonversiBinerDesimalCalculator,
   heksadesimal: HeksadesimalCalculator,
   oktal: OktalCalculator,
+  "konversi-panjang": UnitConverterCalculator,
+  "konversi-massa": UnitConverterCalculator,
+  "konversi-luas": UnitConverterCalculator,
+  "konversi-volume": UnitConverterCalculator,
+  "konversi-suhu": UnitConverterCalculator,
+  "konversi-kecepatan": UnitConverterCalculator,
+  "konversi-waktu": UnitConverterCalculator,
+  "konversi-tekanan": UnitConverterCalculator,
+  "konversi-energi": UnitConverterCalculator,
+  "konversi-daya": UnitConverterCalculator,
 };
 
 export function CalculatorRenderer({
@@ -252,6 +266,7 @@ export function CalculatorRenderer({
       title={calculator.name}
       description={calculator.description}
       categoryName={categoryName}
+      slug={calculator.slug}
     />
   );
 }

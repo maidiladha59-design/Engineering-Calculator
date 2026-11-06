@@ -3,6 +3,7 @@
 import { CalculatorLayout } from "@/components/calculator/CalculatorLayout";
 import { ExampleBlock } from "@/components/calculator/ExampleBlock";
 import { FormulaBlock } from "@/components/calculator/FormulaBlock";
+import { GuidanceBlock } from "@/components/calculator/GuidanceBlock";
 import { NumberField } from "@/components/calculator/NumberField";
 import { ResultCard } from "@/components/calculator/ResultCard";
 import { SelectField } from "@/components/calculator/SelectField";
@@ -176,32 +177,9 @@ export default function PersentaseCalculator(props: {
     });
   }
 
-  const example = (() => {
-    if (mode === "of") {
-      const result = percentOf(15, 200000);
-      return {
-        problem: "Berapa 15% dari Rp200.000?",
-        detail: "15% diubah menjadi 0,15 lalu dikalikan dengan 200.000.",
-        answer: formatNumber(result),
-      };
-    }
-
-    if (mode === "change") {
-      const result = percentChange(200, 250);
-      return {
-        problem: "Nilai naik dari 200 menjadi 250. Berapa perubahan persennya?",
-        detail: "Selisih 50 dibagi nilai awal 200, lalu dikalikan 100.",
-        answer: formatPercent(result),
-      };
-    }
-
-    const result = percentDifference(200, 250);
-    return {
-      problem: "Berapa selisih persen antara 200 dan 250?",
-      detail: "Selisih absolut 50 dibagi rata-rata 225, lalu dikalikan 100.",
-      answer: formatPercent(result),
-    };
-  })();
+  const exampleOf = percentOf(15, 200000);
+  const exampleChange = percentChange(200, 250);
+  const exampleDifference = percentDifference(200, 250);
 
   return (
     <CalculatorLayout
@@ -238,10 +216,61 @@ export default function PersentaseCalculator(props: {
         />
       }
       example={
-        <ExampleBlock
-          problem={example.problem}
-          detail={example.detail}
-          answer={example.answer}
+        <div className="grid gap-4 md:grid-cols-2">
+          <ExampleBlock
+            problem="Berapa 15% dari Rp200.000?"
+            detail="15% diubah menjadi 0,15 lalu dikalikan dengan 200.000."
+            answer={formatNumber(exampleOf)}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                mode: "of",
+                primary: "15",
+                secondary: "200000",
+              })
+            }
+          />
+          <ExampleBlock
+            problem="Nilai naik dari 200 menjadi 250. Berapa perubahan persennya?"
+            detail="Selisih 50 dibagi nilai awal 200, lalu dikalikan 100."
+            answer={formatPercent(exampleChange)}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                mode: "change",
+                primary: "200",
+                secondary: "250",
+              })
+            }
+          />
+          <ExampleBlock
+            problem="Berapa selisih persen antara 200 dan 250?"
+            detail="Selisih absolut 50 dibagi rata-rata 225, lalu dikalikan 100."
+            answer={formatPercent(exampleDifference)}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                mode: "difference",
+                primary: "200",
+                secondary: "250",
+              })
+            }
+          />
+        </div>
+      }
+      notes={
+        <GuidanceBlock
+          mistakes={[
+            "Memakai angka persentase tanpa membaginya dengan 100 saat menghitung persen dari suatu angka.",
+            "Menukar nilai awal dan nilai akhir pada perubahan persen, sehingga arah kenaikan atau penurunan terbalik.",
+            "Memakai nilai awal 0 pada perubahan persen, yang menyebabkan pembagian dengan nol.",
+            "Menganggap perubahan persen dan selisih persen sebagai hal yang sama; keduanya memakai pembagi berbeda.",
+          ]}
+          tips={[
+            "Perubahan persen memakai nilai awal sebagai pembagi, sedangkan selisih persen memakai rata-rata kedua nilai.",
+            "Periksa arah hasil: nilai akhir lebih besar berarti kenaikan, lebih kecil berarti penurunan.",
+            "Untuk diskon, harga setelah diskon sama dengan harga awal dikali (100% − persen diskon).",
+          ]}
         />
       }
     >

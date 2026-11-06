@@ -4,7 +4,8 @@ export type CategorySlug =
   | "mekanika-teknik"
   | "teknik-elektro"
   | "teknik-sipil"
-  | "matematika-komputer";
+  | "matematika-komputer"
+  | "konversi-satuan";
 
 export type CalculatorStatus = "active" | "coming-soon";
 
@@ -66,6 +67,13 @@ export const categories: Category[] = [
     description:
       "Konversi dan aritmatika bilangan biner, heksadesimal, dan oktal dengan langkah per bit yang transparan.",
     tagline: "Biner, heksadesimal, oktal",
+  },
+  {
+    slug: "konversi-satuan",
+    name: "Konversi Satuan",
+    description:
+      "Konversi panjang, massa, luas, volume, suhu, kecepatan, waktu, tekanan, energi, dan daya dengan tabel hasil lengkap.",
+    tagline: "Satuan metrik dan imperial",
   },
 ];
 
@@ -665,6 +673,161 @@ export const calculators: Calculator[] = [
     description:
       "Konversi bilangan oktal ke desimal atau desimal ke oktal dengan validasi digit 0–7 dan langkah perhitungan.",
     keywords: ["oktal", "octal", "konversi oktal", "basis 8", "desimal ke oktal"],
+    status: "active",
+  },
+  {
+    slug: "konversi-panjang",
+    name: "Konversi Panjang",
+    category: "konversi-satuan",
+    description:
+      "Konversi meter, kilometer, sentimeter, milimeter, inci, kaki, yard, dan mil dengan tabel hasil lengkap.",
+    keywords: [
+      "konversi panjang",
+      "km ke meter",
+      "meter ke cm",
+      "inci ke cm",
+      "kaki ke meter",
+      "mil ke km",
+    ],
+    status: "active",
+  },
+  {
+    slug: "konversi-massa",
+    name: "Konversi Massa",
+    category: "konversi-satuan",
+    description:
+      "Konversi kilogram, gram, miligram, kuintal, ton, ons, dan pon dengan langkah perhitungan.",
+    keywords: [
+      "konversi massa",
+      "kg ke gram",
+      "ton ke kg",
+      "pon ke kg",
+      "ons ke gram",
+      "miligram",
+    ],
+    status: "active",
+  },
+  {
+    slug: "konversi-luas",
+    name: "Konversi Luas",
+    category: "konversi-satuan",
+    description:
+      "Konversi meter persegi, sentimeter persegi, hektare, are, kilometer persegi, kaki persegi, dan acre.",
+    keywords: [
+      "konversi luas",
+      "hektare ke m2",
+      "are ke m2",
+      "m2 ke cm2",
+      "acre ke hektare",
+      "kaki persegi",
+    ],
+    status: "active",
+  },
+  {
+    slug: "konversi-volume",
+    name: "Konversi Volume",
+    category: "konversi-satuan",
+    description:
+      "Konversi liter, mililiter, meter kubik, inci kubik, kaki kubik, dan galon AS dengan tabel hasil.",
+    keywords: [
+      "konversi volume",
+      "liter ke m3",
+      "m3 ke liter",
+      "ml ke liter",
+      "galon ke liter",
+      "kaki kubik",
+    ],
+    status: "active",
+  },
+  {
+    slug: "konversi-suhu",
+    name: "Konversi Suhu",
+    category: "konversi-satuan",
+    description:
+      "Konversi Celsius, Fahrenheit, Kelvin, dan Rankine dengan rumus offset dan langkah perhitungan.",
+    keywords: [
+      "konversi suhu",
+      "celsius ke fahrenheit",
+      "fahrenheit ke celsius",
+      "celsius ke kelvin",
+      "kelvin ke celsius",
+      "rankine",
+    ],
+    status: "active",
+  },
+  {
+    slug: "konversi-kecepatan",
+    name: "Konversi Kecepatan",
+    category: "konversi-satuan",
+    description:
+      "Konversi meter per detik, kilometer per jam, mil per jam, knot, dan kaki per detik.",
+    keywords: [
+      "konversi kecepatan",
+      "km jam ke m s",
+      "m s ke km jam",
+      "mph ke km jam",
+      "knot ke km jam",
+    ],
+    status: "active",
+  },
+  {
+    slug: "konversi-waktu",
+    name: "Konversi Waktu",
+    category: "konversi-satuan",
+    description:
+      "Konversi milidetik, detik, menit, jam, dan hari dengan hasil presisi serta tabel lengkap.",
+    keywords: [
+      "konversi waktu",
+      "detik ke menit",
+      "menit ke jam",
+      "jam ke detik",
+      "hari ke jam",
+    ],
+    status: "active",
+  },
+  {
+    slug: "konversi-tekanan",
+    name: "Konversi Tekanan",
+    category: "konversi-satuan",
+    description:
+      "Konversi pascal, kilopascal, megapascal, bar, atmosfer, dan psi untuk kebutuhan teknik.",
+    keywords: [
+      "konversi tekanan",
+      "psi ke bar",
+      "bar ke psi",
+      "atm ke pascal",
+      "mpa ke psi",
+    ],
+    status: "active",
+  },
+  {
+    slug: "konversi-energi",
+    name: "Konversi Energi",
+    category: "konversi-satuan",
+    description:
+      "Konversi joule, kilojoule, kilowatt jam, kalori, kilokalori, dan BTU dengan langkah perhitungan.",
+    keywords: [
+      "konversi energi",
+      "kwh ke joule",
+      "kalori ke joule",
+      "joule ke kalori",
+      "btu ke joule",
+    ],
+    status: "active",
+  },
+  {
+    slug: "konversi-daya",
+    name: "Konversi Daya",
+    category: "konversi-satuan",
+    description:
+      "Konversi watt, kilowatt, megawatt, tenaga kuda mekanik (hp), dan PS dengan tabel hasil.",
+    keywords: [
+      "konversi daya",
+      "hp ke watt",
+      "watt ke hp",
+      "kw ke watt",
+      "tenaga kuda",
+    ],
     status: "active",
   },
 ];

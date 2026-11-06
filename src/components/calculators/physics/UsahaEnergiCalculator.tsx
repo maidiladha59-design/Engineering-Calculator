@@ -3,6 +3,7 @@
 import { CalculatorLayout } from "@/components/calculator/CalculatorLayout";
 import { ExampleBlock } from "@/components/calculator/ExampleBlock";
 import { FormulaBlock } from "@/components/calculator/FormulaBlock";
+import { GuidanceBlock } from "@/components/calculator/GuidanceBlock";
 import { ResultCard } from "@/components/calculator/ResultCard";
 import { SelectField } from "@/components/calculator/SelectField";
 import { StepsList, type StepItem } from "@/components/calculator/StepsList";
@@ -241,6 +242,8 @@ export default function UsahaEnergiCalculator(props: {
   }
 
   const exampleWork = calculateWork(50, 8);
+  const exampleForce = forceFromWork(400, 8);
+  const exampleDisplacement = displacementFromWork(400, 50);
 
   return (
     <CalculatorLayout
@@ -268,10 +271,61 @@ export default function UsahaEnergiCalculator(props: {
         />
       }
       example={
-        <ExampleBlock
-          problem="Gaya 50 N memindahkan benda sejauh 8 m. Berapa usahanya?"
-          detail="W = F × s = 50 N × 8 m."
-          answer={`${formatNumber(exampleWork)} J (${formatNumber(exampleWork / 1000)} kJ)`}
+        <div className="grid gap-4 md:grid-cols-2">
+          <ExampleBlock
+            problem="Gaya 50 N memindahkan benda sejauh 8 m. Berapa usahanya?"
+            detail="W = F × s = 50 N × 8 m."
+            answer={`${formatNumber(exampleWork)} J (${formatNumber(exampleWork / 1000)} kJ)`}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                mode: "work",
+                force: "50",
+                displacement: "8",
+              })
+            }
+          />
+          <ExampleBlock
+            problem="Usaha 400 J memindahkan benda sejauh 8 m. Berapa gaya yang bekerja?"
+            detail="F = W ÷ s = 400 J ÷ 8 m."
+            answer={`${formatNumber(exampleForce)} N`}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                mode: "force",
+                work: "400",
+                displacement: "8",
+              })
+            }
+          />
+          <ExampleBlock
+            problem="Usaha 400 J dilakukan oleh gaya 50 N. Berapa perpindahan benda?"
+            detail="s = W ÷ F = 400 J ÷ 50 N."
+            answer={`${formatNumber(exampleDisplacement)} m`}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                mode: "displacement",
+                work: "400",
+                force: "50",
+              })
+            }
+          />
+        </div>
+      }
+      notes={
+        <GuidanceBlock
+          mistakes={[
+            "Mengabaikan sudut antara gaya dan perpindahan, padahal usaha bergantung pada cos θ.",
+            "Memakai perpindahan nol lalu menyimpulkan gayanya nol; gaya tetap ada meskipun benda tidak bergerak.",
+            "Mencampur sentimeter dan meter sehingga usaha terhitung 100 kali lebih besar atau lebih kecil.",
+            "Menganggap usaha selalu positif; gaya yang melawan arah gerak menghasilkan usaha negatif.",
+          ]}
+          tips={[
+            "Usaha sama dengan perubahan energi, jadi hasilnya bisa diperiksa lewat energi kinetik atau potensial.",
+            "Jika gaya searah perpindahan, cos 0° = 1 sehingga W = F × s; jika tegak lurus, usahanya nol.",
+            "Pastikan satuan akhir newton-meter, yang setara dengan joule.",
+          ]}
         />
       }
     >

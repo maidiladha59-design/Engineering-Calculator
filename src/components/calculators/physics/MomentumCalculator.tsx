@@ -3,6 +3,7 @@
 import { CalculatorLayout } from "@/components/calculator/CalculatorLayout";
 import { ExampleBlock } from "@/components/calculator/ExampleBlock";
 import { FormulaBlock } from "@/components/calculator/FormulaBlock";
+import { GuidanceBlock } from "@/components/calculator/GuidanceBlock";
 import { NumberField } from "@/components/calculator/NumberField";
 import { ResultCard } from "@/components/calculator/ResultCard";
 import { SelectField } from "@/components/calculator/SelectField";
@@ -224,6 +225,8 @@ export default function MomentumCalculator(props: {
   }
 
   const exampleMomentum = calculateMomentum(1500, 20);
+  const exampleMass = massFromMomentum(30000, 20);
+  const exampleVelocity = velocityFromMomentum(30000, 1500);
 
   return (
     <CalculatorLayout
@@ -251,10 +254,61 @@ export default function MomentumCalculator(props: {
         />
       }
       example={
-        <ExampleBlock
-          problem="Truk 1.500 kg bergerak dengan kecepatan 20 m/s. Berapa momentumnya?"
-          detail="p = m × v = 1.500 kg × 20 m/s."
-          answer={`${formatNumber(exampleMomentum)} kg·m/s (${formatNumber(exampleMomentum)} N·s)`}
+        <div className="grid gap-4 md:grid-cols-2">
+          <ExampleBlock
+            problem="Truk 1.500 kg bergerak dengan kecepatan 20 m/s. Berapa momentumnya?"
+            detail="p = m × v = 1.500 kg × 20 m/s."
+            answer={`${formatNumber(exampleMomentum)} kg·m/s (${formatNumber(exampleMomentum)} N·s)`}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                mode: "momentum",
+                mass: "1500",
+                velocity: "20",
+              })
+            }
+          />
+          <ExampleBlock
+            problem="Benda bermomentum 30.000 kg·m/s bergerak 20 m/s. Berapa massanya?"
+            detail="m = p ÷ v = 30.000 kg·m/s ÷ 20 m/s."
+            answer={`${formatNumber(exampleMass)} kg`}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                mode: "mass",
+                momentum: "30000",
+                velocity: "20",
+              })
+            }
+          />
+          <ExampleBlock
+            problem="Benda 1.500 kg memiliki momentum 30.000 kg·m/s. Berapa kecepatannya?"
+            detail="v = p ÷ m = 30.000 kg·m/s ÷ 1.500 kg."
+            answer={`${formatNumber(exampleVelocity)} m/s`}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                mode: "velocity",
+                momentum: "30000",
+                mass: "1500",
+              })
+            }
+          />
+        </div>
+      }
+      notes={
+        <GuidanceBlock
+          mistakes={[
+            "Memasukkan kecepatan nol saat mencari massa, yang membuat pembagian tidak terdefinisi.",
+            "Mencampur satuan gram dan kilogram atau km/jam dan m/s sehingga hasil meleset.",
+            "Mengabaikan arah gerak, padahal momentum adalah besaran vektor yang bertanda.",
+            "Menyamakan satuan kg·m/s dengan N tanpa mengalikan waktu, padahal N·s yang setara dengan kg·m/s.",
+          ]}
+          tips={[
+            "Tetapkan arah positif lebih dulu agar tanda momentum pada tumbukan mudah ditafsirkan.",
+            "Momentum sama dengan impuls, jadi perubahan momentum dapat dihitung dari gaya dikali selang waktu.",
+            "Untuk benda bermassa besar dengan kecepatan kecil, momentumnya bisa tetap besar; jangan hanya melihat kecepatan.",
+          ]}
         />
       }
     >

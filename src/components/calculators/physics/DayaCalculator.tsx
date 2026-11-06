@@ -3,6 +3,7 @@
 import { CalculatorLayout } from "@/components/calculator/CalculatorLayout";
 import { ExampleBlock } from "@/components/calculator/ExampleBlock";
 import { FormulaBlock } from "@/components/calculator/FormulaBlock";
+import { GuidanceBlock } from "@/components/calculator/GuidanceBlock";
 import { ResultCard } from "@/components/calculator/ResultCard";
 import { SelectField } from "@/components/calculator/SelectField";
 import { StepsList, type StepItem } from "@/components/calculator/StepsList";
@@ -235,6 +236,8 @@ export default function DayaCalculator(props: {
   }
 
   const examplePower = calculatePower(1200, 4);
+  const exampleWork = workFromPower(300, 4);
+  const exampleTime = timeFromWork(1200, 300);
 
   return (
     <CalculatorLayout
@@ -262,10 +265,61 @@ export default function DayaCalculator(props: {
         />
       }
       example={
-        <ExampleBlock
-          problem="Mesin melakukan usaha 1.200 J dalam 4 detik. Berapa dayanya?"
-          detail="P = W ÷ t = 1.200 J ÷ 4 s."
-          answer={`${formatNumber(examplePower)} W (${formatNumber(examplePower / 1000)} kW)`}
+        <div className="grid gap-4 md:grid-cols-2">
+          <ExampleBlock
+            problem="Mesin melakukan usaha 1.200 J dalam 4 detik. Berapa dayanya?"
+            detail="P = W ÷ t = 1.200 J ÷ 4 s."
+            answer={`${formatNumber(examplePower)} W (${formatNumber(examplePower / 1000)} kW)`}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                mode: "power",
+                work: "1200",
+                time: "4",
+              })
+            }
+          />
+          <ExampleBlock
+            problem="Lampu 300 W menyala selama 4 detik. Berapa energi yang dipakai?"
+            detail="W = P × t = 300 W × 4 s."
+            answer={`${formatNumber(exampleWork)} J`}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                mode: "work",
+                power: "300",
+                time: "4",
+              })
+            }
+          />
+          <ExampleBlock
+            problem="Berapa waktu yang dibutuhkan alat 300 W untuk melakukan usaha 1.200 J?"
+            detail="t = W ÷ P = 1.200 J ÷ 300 W."
+            answer={`${formatNumber(exampleTime)} s`}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                mode: "time",
+                work: "1200",
+                power: "300",
+              })
+            }
+          />
+        </div>
+      }
+      notes={
+        <GuidanceBlock
+          mistakes={[
+            "Memasukkan waktu nol saat mencari daya, yang membuat pembagian tidak terdefinisi.",
+            "Menukar usaha dengan daya; usaha diukur dalam joule, sedangkan daya dalam watt atau joule per detik.",
+            "Menganggap 1 kWh sama dengan 1 kW; kWh adalah energi, bukan daya.",
+            "Memakai waktu dalam menit tanpa mengubahnya ke detik sehingga daya terhitung terlalu besar 60 kali.",
+          ]}
+          tips={[
+            "Gunakan P = W ÷ t untuk daya rata-rata, dan P = F × v untuk daya sesaat pada gerak lurus.",
+            "Periksa hasil dengan mengalikan daya kembali dengan waktu; hasilnya harus sama dengan usaha.",
+            "Efisiensi selalu di bawah 100%, sehingga daya keluaran tidak mungkin melebihi daya masukan.",
+          ]}
         />
       }
     >

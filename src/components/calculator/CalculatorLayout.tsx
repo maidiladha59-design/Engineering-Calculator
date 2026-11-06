@@ -7,6 +7,7 @@ export interface CalculatorComponentProps {
   title: string;
   description: string;
   categoryName: string;
+  slug?: string;
 }
 
 export interface CalculatorLayoutProps extends CalculatorComponentProps {

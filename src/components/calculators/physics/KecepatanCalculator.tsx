@@ -3,6 +3,7 @@
 import { CalculatorLayout } from "@/components/calculator/CalculatorLayout";
 import { ExampleBlock } from "@/components/calculator/ExampleBlock";
 import { FormulaBlock } from "@/components/calculator/FormulaBlock";
+import { GuidanceBlock } from "@/components/calculator/GuidanceBlock";
 import { ResultCard } from "@/components/calculator/ResultCard";
 import { SelectField } from "@/components/calculator/SelectField";
 import { StepsList, type StepItem } from "@/components/calculator/StepsList";
@@ -253,6 +254,14 @@ export default function KecepatanCalculator(props: {
   const exampleSpeed = calculateSpeed(exampleDistanceM, exampleTimeS);
   const exampleKmh = convertFromBase(exampleSpeed, "km/h", SPEED_UNITS);
 
+  const exampleSpeedMS = convertToBase(80, "km/h", SPEED_UNITS);
+  const exampleTravelTime = convertToBase(2, "h", TIME_UNITS);
+  const exampleDistance = distanceFromSpeed(exampleSpeedMS, exampleTravelTime);
+  const exampleDistanceKm = convertFromBase(exampleDistance, "km", LENGTH_UNITS);
+
+  const exampleDuration = timeFromSpeed(exampleDistanceM, exampleSpeedMS);
+  const exampleDurationHours = convertFromBase(exampleDuration, "h", TIME_UNITS);
+
   return (
     <CalculatorLayout
       title={props.title}
@@ -279,10 +288,67 @@ export default function KecepatanCalculator(props: {
         />
       }
       example={
-        <ExampleBlock
-          problem="Sebuah mobil menempuh 120 km dalam 1,5 jam. Berapa kecepatannya?"
-          detail={`Konversi: 120 km = ${formatNumber(exampleDistanceM)} m dan 1,5 jam = ${formatNumber(exampleTimeS)} s. Maka v = ${formatNumber(exampleDistanceM)} ÷ ${formatNumber(exampleTimeS)} = ${formatNumber(exampleSpeed)} m/s.`}
-          answer={`${formatNumber(exampleSpeed)} m/s (${formatNumber(exampleKmh)} km/jam)`}
+        <div className="grid gap-4 md:grid-cols-2">
+          <ExampleBlock
+            problem="Sebuah mobil menempuh 120 km dalam 1,5 jam. Berapa kecepatannya?"
+            detail={`Konversi: 120 km = ${formatNumber(exampleDistanceM)} m dan 1,5 jam = ${formatNumber(exampleTimeS)} s. Maka v = ${formatNumber(exampleDistanceM)} ÷ ${formatNumber(exampleTimeS)} = ${formatNumber(exampleSpeed)} m/s.`}
+            answer={`${formatNumber(exampleSpeed)} m/s (${formatNumber(exampleKmh)} km/jam)`}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                mode: "speed",
+                distance: "120",
+                distanceUnit: "km",
+                time: "1.5",
+                timeUnit: "h",
+              })
+            }
+          />
+          <ExampleBlock
+            problem="Mobil melaju 80 km/jam selama 2 jam. Berapa jarak yang ditempuh?"
+            detail={`80 km/jam = ${formatNumber(exampleSpeedMS)} m/s dan 2 jam = ${formatNumber(exampleTravelTime)} s. Maka s = ${formatNumber(exampleSpeedMS)} × ${formatNumber(exampleTravelTime)} = ${formatNumber(exampleDistance)} m.`}
+            answer={`${formatNumber(exampleDistanceKm)} km`}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                mode: "distance",
+                speed: "80",
+                speedUnit: "km/h",
+                time: "2",
+                timeUnit: "h",
+              })
+            }
+          />
+          <ExampleBlock
+            problem="Berapa waktu yang dibutuhkan untuk menempuh 120 km dengan kecepatan 80 km/jam?"
+            detail={`Kecepatan ${formatNumber(exampleSpeedMS)} m/s dan jarak ${formatNumber(exampleDistanceM)} m. Maka t = ${formatNumber(exampleDistanceM)} ÷ ${formatNumber(exampleSpeedMS)} = ${formatNumber(exampleDuration)} s.`}
+            answer={`${formatNumber(exampleDurationHours)} jam`}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                mode: "time",
+                distance: "120",
+                distanceUnit: "km",
+                speed: "80",
+                speedUnit: "km/h",
+              })
+            }
+          />
+        </div>
+      }
+      notes={
+        <GuidanceBlock
+          mistakes={[
+            "Mencampur satuan, misalnya jarak dalam kilometer tetapi waktu dalam detik, sehingga hasil tidak konsisten.",
+            "Membagi waktu dengan jarak saat mencari kecepatan; yang benar adalah jarak dibagi waktu.",
+            "Memakai waktu nol, yang membuat pembagian tidak terdefinisi, bukan menghasilkan kecepatan tak hingga.",
+            "Menulis 1,5 jam sebagai 1 jam 50 menit sehingga konversi waktunya keliru.",
+          ]}
+          tips={[
+            "Ubah semua besaran ke SI (meter dan detik) lebih dulu, lalu konversi hasilnya ke km/jam bila perlu.",
+            "Ingat faktor 3,6: 1 m/s sama dengan 3,6 km/jam, jadi 20 m/s = 72 km/jam.",
+            "Gunakan segitiga rumus v = s ÷ t untuk mengingat bahwa s = v × t dan t = s ÷ v.",
+          ]}
         />
       }
     >

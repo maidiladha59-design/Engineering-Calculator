@@ -3,6 +3,7 @@
 import { CalculatorLayout } from "@/components/calculator/CalculatorLayout";
 import { ExampleBlock } from "@/components/calculator/ExampleBlock";
 import { FormulaBlock } from "@/components/calculator/FormulaBlock";
+import { GuidanceBlock } from "@/components/calculator/GuidanceBlock";
 import { NumberField } from "@/components/calculator/NumberField";
 import { ResultCard } from "@/components/calculator/ResultCard";
 import { StepsList } from "@/components/calculator/StepsList";
@@ -85,6 +86,8 @@ export default function LogaritmaCalculator(props: {
   }
 
   const exampleResult = logarithm(32, 2);
+  const exampleBase10 = logarithm(1000, 10);
+  const exampleBase3 = logarithm(81, 3);
 
   return (
     <CalculatorLayout
@@ -112,10 +115,46 @@ export default function LogaritmaCalculator(props: {
         />
       }
       example={
-        <ExampleBlock
-          problem="Hitung log₂ 32."
-          detail={`Dengan perubahan basis: ln 32 ÷ ln 2 = ${formatNumber(Math.log(32))} ÷ ${formatNumber(Math.log(2))}.`}
-          answer={formatNumber(exampleResult)}
+        <div className="grid gap-4 md:grid-cols-2">
+          <ExampleBlock
+            problem="Hitung log₂ 32."
+            detail={`Dengan perubahan basis: ln 32 ÷ ln 2 = ${formatNumber(Math.log(32))} ÷ ${formatNumber(Math.log(2))}.`}
+            answer={formatNumber(exampleResult)}
+            onUse={() =>
+              calculator.setMany({ ...INITIAL, value: "32", base: "2" })
+            }
+          />
+          <ExampleBlock
+            problem="Hitung log₁₀ 1000."
+            detail="Logaritma basis 10 dari 1000 menanyakan pangkat 10 yang menghasilkan 1000, yaitu 3."
+            answer={formatNumber(exampleBase10)}
+            onUse={() =>
+              calculator.setMany({ ...INITIAL, value: "1000", base: "10" })
+            }
+          />
+          <ExampleBlock
+            problem="Hitung log₃ 81."
+            detail="Karena 3⁴ = 81, logaritma basis 3 dari 81 sama dengan 4."
+            answer={formatNumber(exampleBase3)}
+            onUse={() =>
+              calculator.setMany({ ...INITIAL, value: "81", base: "3" })
+            }
+          />
+        </div>
+      }
+      notes={
+        <GuidanceBlock
+          mistakes={[
+            "Memakai basis 1. Logaritma basis 1 tidak terdefinisi karena 1 dipangkatkan berapa pun tetap 1.",
+            "Memasukkan nilai x nol atau negatif, padahal logaritma hanya terdefinisi untuk x > 0.",
+            "Menganggap log(x + y) sama dengan log x + log y. Yang benar adalah log(x · y) = log x + log y.",
+            "Lupa menyesuaikan basis, misalnya menghitung log₂ 32 tetapi mengetikkan basis 10 sehingga hasilnya 1,505.",
+          ]}
+          tips={[
+            "Periksa hasil dengan mengembalikannya ke bentuk pangkat: jika log₂ 32 = 5, maka 2⁵ harus sama dengan 32.",
+            "Gunakan perubahan basis ln x ÷ ln b untuk semua basis, termasuk basis pecahan seperti 0,5.",
+            "Bedakan log basis 10 (log) dan logaritma natural (ln) pada kalkulator ilmiah; keduanya memberi hasil berbeda.",
+          ]}
         />
       }
     >

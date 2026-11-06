@@ -3,6 +3,7 @@
 import { CalculatorLayout } from "@/components/calculator/CalculatorLayout";
 import { ExampleBlock } from "@/components/calculator/ExampleBlock";
 import { FormulaBlock } from "@/components/calculator/FormulaBlock";
+import { GuidanceBlock } from "@/components/calculator/GuidanceBlock";
 import { NumberField } from "@/components/calculator/NumberField";
 import { ResultCard } from "@/components/calculator/ResultCard";
 import { StepsList } from "@/components/calculator/StepsList";
@@ -169,6 +170,8 @@ export default function SistemLinearCalculator(props: {
   }
 
   const example = solveLinearSystem(2, 3, 12, 1, -1, 1);
+  const exampleSecond = solveLinearSystem(4, 1, 9, 1, -1, 1);
+  const exampleNone = solveLinearSystem(1, 1, 2, 2, 2, 5);
 
   return (
     <CalculatorLayout
@@ -202,10 +205,70 @@ x=\frac{D_x}{D},\quad y=\frac{D_y}{D}`}
         />
       }
       example={
-        <ExampleBlock
-          problem="Selesaikan 2x + 3y = 12 dan x − y = 1."
-          detail={`D = (2)(−1) − (1)(3) = −5. Dx = (12)(−1) − (1)(3) = −15. Dy = (2)(1) − (1)(12) = −10. Maka x = −15 ÷ −5 = 3 dan y = −10 ÷ −5 = 2.`}
-          answer={`x = ${formatNumber(example.x ?? 0)}, y = ${formatNumber(example.y ?? 0)}`}
+        <div className="grid gap-4 md:grid-cols-2">
+          <ExampleBlock
+            problem="Selesaikan 2x + 3y = 12 dan x − y = 1."
+            detail="D = (2)(−1) − (1)(3) = −5. Dx = (12)(−1) − (1)(3) = −15. Dy = (2)(1) − (1)(12) = −10. Maka x = −15 ÷ −5 = 3 dan y = −10 ÷ −5 = 2."
+            answer={`x = ${formatNumber(example.x ?? 0)}, y = ${formatNumber(example.y ?? 0)}`}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                a1: "2",
+                b1: "3",
+                c1: "12",
+                a2: "1",
+                b2: "-1",
+                c2: "1",
+              })
+            }
+          />
+          <ExampleBlock
+            problem="Selesaikan 4x + y = 9 dan x − y = 1."
+            detail="D = (4)(−1) − (1)(1) = −5. Dx = (9)(−1) − (1)(1) = −10. Dy = (4)(1) − (1)(9) = −5. Maka x = 2 dan y = 1."
+            answer={solutionValue(exampleSecond)}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                a1: "4",
+                b1: "1",
+                c1: "9",
+                a2: "1",
+                b2: "-1",
+                c2: "1",
+              })
+            }
+          />
+          <ExampleBlock
+            problem="Selesaikan x + y = 2 dan 2x + 2y = 5."
+            detail="D = (1)(2) − (2)(1) = 0. Kedua garis sejajar sehingga sistem tidak memiliki solusi."
+            answer={solutionValue(exampleNone)}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                a1: "1",
+                b1: "1",
+                c1: "2",
+                a2: "2",
+                b2: "2",
+                c2: "5",
+              })
+            }
+          />
+        </div>
+      }
+      notes={
+        <GuidanceBlock
+          mistakes={[
+            "Menyimpulkan sistem tanpa solusi setiap kali determinan nol, padahal D = 0 bisa berarti tak hingga solusi jika kedua persamaan sebenarnya sama.",
+            "Menempatkan koefisien pada kolom yang salah, misalnya menukar b₁ dengan c₁ sehingga determinan bantu keliru.",
+            "Salah tanda saat mengurangkan hasil kali: D = a₁b₂ − a₂b₁, bukan a₁b₁ − a₂b₂.",
+            "Tidak memeriksa kembali solusi, sehingga kesalahan tanda pada satu langkah tidak terdeteksi.",
+          ]}
+          tips={[
+            "Substitusikan nilai x dan y yang diperoleh ke kedua persamaan asli; keduanya harus memenuhi ruas kanan.",
+            "Metode eliminasi bisa dipakai sebagai pemeriksaan silang terhadap hasil metode determinan.",
+            "Jika kedua persamaan merupakan kelipatan satu sama lain, sistem memiliki tak hingga solusi, bukan satu titik potong.",
+          ]}
         />
       }
     >

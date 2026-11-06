@@ -3,6 +3,7 @@
 import { CalculatorLayout } from "@/components/calculator/CalculatorLayout";
 import { ExampleBlock } from "@/components/calculator/ExampleBlock";
 import { FormulaBlock } from "@/components/calculator/FormulaBlock";
+import { GuidanceBlock } from "@/components/calculator/GuidanceBlock";
 import { ResultCard } from "@/components/calculator/ResultCard";
 import { SelectField } from "@/components/calculator/SelectField";
 import { StepsList, type StepItem } from "@/components/calculator/StepsList";
@@ -244,6 +245,8 @@ export default function MassaJenisCalculator(props: {
   }
 
   const exampleDensity = calculateDensity(2, 0.002);
+  const exampleMass = massFromDensity(1000, 0.002);
+  const exampleVolume = volumeFromDensity(2, 1000);
 
   return (
     <CalculatorLayout
@@ -271,10 +274,61 @@ export default function MassaJenisCalculator(props: {
         />
       }
       example={
-        <ExampleBlock
-          problem="Benda bermassa 2 kg memiliki volume 0,002 m³. Berapa massa jenisnya?"
-          detail={`ρ = m ÷ V = 2 kg ÷ 0,002 m³ = ${formatNumber(exampleDensity)} kg/m³.`}
-          answer={`${formatNumber(exampleDensity)} kg/m³ (${formatNumber(convertFromBase(exampleDensity, "g/cm3", DENSITY_UNITS))} g/cm³)`}
+        <div className="grid gap-4 md:grid-cols-2">
+          <ExampleBlock
+            problem="Benda bermassa 2 kg memiliki volume 0,002 m³. Berapa massa jenisnya?"
+            detail={`ρ = m ÷ V = 2 kg ÷ 0,002 m³ = ${formatNumber(exampleDensity)} kg/m³.`}
+            answer={`${formatNumber(exampleDensity)} kg/m³ (${formatNumber(convertFromBase(exampleDensity, "g/cm3", DENSITY_UNITS))} g/cm³)`}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                mode: "density",
+                mass: "2",
+                volume: "0.002",
+              })
+            }
+          />
+          <ExampleBlock
+            problem="Berapa massa 0,002 m³ air jika massa jenisnya 1.000 kg/m³?"
+            detail={`m = ρ × V = 1.000 kg/m³ × 0,002 m³ = ${formatNumber(exampleMass)} kg.`}
+            answer={`${formatNumber(exampleMass)} kg`}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                mode: "mass",
+                density: "1000",
+                volume: "0.002",
+              })
+            }
+          />
+          <ExampleBlock
+            problem="Berapa volume 2 kg air jika massa jenisnya 1.000 kg/m³?"
+            detail={`V = m ÷ ρ = 2 kg ÷ 1.000 kg/m³ = ${formatNumber(exampleVolume)} m³ = ${formatNumber(convertFromBase(exampleVolume, "L", VOLUME_UNITS))} L.`}
+            answer={`${formatNumber(exampleVolume)} m³`}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                mode: "volume",
+                mass: "2",
+                density: "1000",
+              })
+            }
+          />
+        </div>
+      }
+      notes={
+        <GuidanceBlock
+          mistakes={[
+            "Memasukkan volume nol saat mencari massa jenis, yang membuat pembagian tidak terdefinisi.",
+            "Mencampur g/cm³ dan kg/m³; 1 g/cm³ sama dengan 1.000 kg/m³, bukan 100.",
+            "Menyamakan massa dengan berat, padahal massa dalam kg sedangkan berat dalam newton.",
+            "Menganggap massa jenis berubah karena jumlah benda; massa jenis bergantung pada jenis bahan, bukan ukuran.",
+          ]}
+          tips={[
+            "Gunakan ρ = m ÷ V dan periksa hasilnya terhadap acuan: air sekitar 1.000 kg/m³ atau 1 g/cm³.",
+            "Untuk mengubah g/cm³ ke kg/m³, kalikan dengan 1.000; sebaliknya bagi dengan 1.000.",
+            "Massa jenis berubah terhadap suhu karena volume memuai, meskipun perubahannya kecil untuk zat padat.",
+          ]}
         />
       }
     >

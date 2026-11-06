@@ -3,6 +3,7 @@
 import { CalculatorLayout } from "@/components/calculator/CalculatorLayout";
 import { ExampleBlock } from "@/components/calculator/ExampleBlock";
 import { FormulaBlock } from "@/components/calculator/FormulaBlock";
+import { GuidanceBlock } from "@/components/calculator/GuidanceBlock";
 import { NumberField } from "@/components/calculator/NumberField";
 import { ResultCard } from "@/components/calculator/ResultCard";
 import { SelectField } from "@/components/calculator/SelectField";
@@ -224,6 +225,8 @@ export default function ImpulsCalculator(props: {
   }
 
   const exampleImpulse = calculateImpulse(20, 0.5);
+  const exampleForce = forceFromImpulse(10, 0.5);
+  const exampleTime = timeFromImpulse(10, 20);
 
   return (
     <CalculatorLayout
@@ -251,10 +254,61 @@ export default function ImpulsCalculator(props: {
         />
       }
       example={
-        <ExampleBlock
-          problem="Gaya 20 N bekerja selama 0,5 detik. Berapa impulsnya?"
-          detail="I = F × Δt = 20 N × 0,5 s."
-          answer={`${formatNumber(exampleImpulse)} N·s`}
+        <div className="grid gap-4 md:grid-cols-2">
+          <ExampleBlock
+            problem="Gaya 20 N bekerja selama 0,5 detik. Berapa impulsnya?"
+            detail="I = F × Δt = 20 N × 0,5 s."
+            answer={`${formatNumber(exampleImpulse)} N·s`}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                mode: "impulse",
+                force: "20",
+                time: "0.5",
+              })
+            }
+          />
+          <ExampleBlock
+            problem="Impuls 10 N·s bekerja selama 0,5 detik. Berapa gaya rata-ratanya?"
+            detail="F = I ÷ Δt = 10 N·s ÷ 0,5 s."
+            answer={`${formatNumber(exampleForce)} N`}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                mode: "force",
+                impulse: "10",
+                time: "0.5",
+              })
+            }
+          />
+          <ExampleBlock
+            problem="Impuls 10 N·s dihasilkan oleh gaya 20 N. Berapa selang waktunya?"
+            detail="Δt = I ÷ F = 10 N·s ÷ 20 N."
+            answer={`${formatNumber(exampleTime)} s`}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                mode: "time",
+                impulse: "10",
+                force: "20",
+              })
+            }
+          />
+        </div>
+      }
+      notes={
+        <GuidanceBlock
+          mistakes={[
+            "Memasukkan selang waktu nol saat mencari gaya, yang membuat pembagian tidak terdefinisi.",
+            "Menyamakan impuls dengan gaya; impuls adalah gaya dikali selang waktu, bukan gayanya saja.",
+            "Memakai selang waktu yang salah, misalnya waktu total gerak padahal kontak gaya hanya sesaat.",
+            "Mengabaikan arah sehingga tanda impuls pada pantulan tidak sesuai.",
+          ]}
+          tips={[
+            "Gunakan hubungan impuls–momentum I = F · Δt = Δp untuk memeriksa hasil.",
+            "Pada tumbukan singkat, gaya besar bekerja dalam waktu kecil namun impulsnya tetap terbatas.",
+            "Tentukan arah positif lebih dulu, terutama untuk benda yang memantul sehingga kecepatannya berbalik tanda.",
+          ]}
         />
       }
     >

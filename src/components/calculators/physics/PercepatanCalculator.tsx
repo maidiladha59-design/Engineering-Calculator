@@ -3,6 +3,7 @@
 import { CalculatorLayout } from "@/components/calculator/CalculatorLayout";
 import { ExampleBlock } from "@/components/calculator/ExampleBlock";
 import { FormulaBlock } from "@/components/calculator/FormulaBlock";
+import { GuidanceBlock } from "@/components/calculator/GuidanceBlock";
 import { ResultCard } from "@/components/calculator/ResultCard";
 import { SelectField } from "@/components/calculator/SelectField";
 import { StepsList, type StepItem } from "@/components/calculator/StepsList";
@@ -343,6 +344,9 @@ export default function PercepatanCalculator(props: {
     exampleTime,
   );
 
+  const exampleFinalVelocity = finalVelocity(10, 2, 5);
+  const exampleElapsed = timeFromAcceleration(30, 10, 2);
+
   return (
     <CalculatorLayout
       title={props.title}
@@ -370,10 +374,67 @@ export default function PercepatanCalculator(props: {
         />
       }
       example={
-        <ExampleBlock
-          problem="Mobil dari keadaan diam mencapai 72 km/jam dalam 10 detik. Berapa percepatannya?"
-          detail={`72 km/jam = ${formatNumber(exampleFinal)} m/s. Maka a = (${formatNumber(exampleFinal)} − 0) ÷ ${formatNumber(exampleTime)} = ${formatNumber(exampleAcceleration)} m/s².`}
-          answer={`${formatNumber(exampleAcceleration)} m/s²`}
+        <div className="grid gap-4 md:grid-cols-2">
+          <ExampleBlock
+            problem="Mobil dari keadaan diam mencapai 72 km/jam dalam 10 detik. Berapa percepatannya?"
+            detail={`72 km/jam = ${formatNumber(exampleFinal)} m/s. Maka a = (${formatNumber(exampleFinal)} − 0) ÷ ${formatNumber(exampleTime)} = ${formatNumber(exampleAcceleration)} m/s².`}
+            answer={`${formatNumber(exampleAcceleration)} m/s²`}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                mode: "acceleration",
+                initial: "0",
+                initialUnit: "km/h",
+                final: "72",
+                finalUnit: "km/h",
+                time: "10",
+                timeUnit: "s",
+              })
+            }
+          />
+          <ExampleBlock
+            problem="Benda bergerak 10 m/s dengan percepatan 2 m/s² selama 5 detik. Berapa kecepatan akhirnya?"
+            detail={`v = u + a·t = 10 + 2 × 5 = ${formatNumber(exampleFinalVelocity)} m/s.`}
+            answer={`${formatNumber(exampleFinalVelocity)} m/s`}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                mode: "final",
+                initial: "10",
+                acceleration: "2",
+                time: "5",
+              })
+            }
+          />
+          <ExampleBlock
+            problem="Kecepatan benda naik dari 10 m/s menjadi 30 m/s dengan percepatan 2 m/s². Berapa waktunya?"
+            detail={`t = (v − u) ÷ a = (30 − 10) ÷ 2 = ${formatNumber(exampleElapsed)} s.`}
+            answer={`${formatNumber(exampleElapsed)} s`}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                mode: "time",
+                initial: "10",
+                final: "30",
+                acceleration: "2",
+              })
+            }
+          />
+        </div>
+      }
+      notes={
+        <GuidanceBlock
+          mistakes={[
+            "Membalik urutan pengurangan menjadi u − v, sehingga tanda percepatan menjadi kebalikannya.",
+            "Memakai kecepatan dalam km/jam tanpa mengubahnya ke m/s, padahal waktu diukur dalam detik.",
+            "Memasukkan percepatan nol saat mencari waktu, yang membuat pembagian tidak terdefinisi.",
+            "Menganggap percepatan selalu positif; perlambatan menghasilkan nilai negatif yang valid.",
+          ]}
+          tips={[
+            "Tetapkan satu arah sebagai positif agar tanda percepatan dan kecepatan konsisten.",
+            "Konversi km/jam ke m/s dengan membagi 3,6 sebelum memakai rumus.",
+            "Pada grafik kecepatan terhadap waktu, percepatan adalah kemiringan garisnya.",
+          ]}
         />
       }
     >

@@ -13,6 +13,7 @@ const NAV_LINKS = [
   { href: "/kalkulator", label: "Kalkulator" },
   { href: "/kalkulator/matematika", label: "Matematika" },
   { href: "/kalkulator/fisika", label: "Fisika" },
+  { href: "/artikel", label: "Artikel" },
 ];
 
 export function Navbar() {

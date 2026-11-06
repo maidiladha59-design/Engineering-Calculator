@@ -3,6 +3,7 @@
 import { CalculatorLayout } from "@/components/calculator/CalculatorLayout";
 import { ExampleBlock } from "@/components/calculator/ExampleBlock";
 import { FormulaBlock } from "@/components/calculator/FormulaBlock";
+import { GuidanceBlock } from "@/components/calculator/GuidanceBlock";
 import { NumberField } from "@/components/calculator/NumberField";
 import { ResultCard } from "@/components/calculator/ResultCard";
 import { SelectField } from "@/components/calculator/SelectField";
@@ -149,8 +150,9 @@ export default function PangkatAkarCalculator(props: {
     });
   }
 
-  const powerExample = power(2, 10);
-  const rootExample = nthRoot(27, 3);
+  const examplePower = power(2, 10);
+  const exampleNegativePower = power(5, -2);
+  const exampleRoot = nthRoot(27, 3);
 
   return (
     <CalculatorLayout
@@ -181,19 +183,62 @@ a^n &= \underbrace{a\times a\times\cdots\times a}_{n\text{ faktor}}\\
         />
       }
       example={
-        mode === "power" ? (
+        <div className="grid gap-4 md:grid-cols-2">
           <ExampleBlock
             problem="Hitung 2¹⁰."
             detail="Kalikan angka 2 sebanyak 10 faktor: 2 × 2 × … × 2."
-            answer={formatNumber(powerExample)}
+            answer={formatNumber(examplePower)}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                mode: "power",
+                base: "2",
+                exponent: "10",
+              })
+            }
           />
-        ) : (
+          <ExampleBlock
+            problem="Hitung 5⁻²."
+            detail="Pangkat negatif berarti kebalikan: 5⁻² = 1 ÷ 5² = 1 ÷ 25."
+            answer={formatNumber(exampleNegativePower)}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                mode: "power",
+                base: "5",
+                exponent: "-2",
+              })
+            }
+          />
           <ExampleBlock
             problem="Hitung akar pangkat tiga dari 27 (∛27)."
             detail="Cari bilangan yang jika dipangkatkan 3 menghasilkan 27. Bilangan itu adalah 3 karena 3³ = 27."
-            answer={formatNumber(rootExample)}
+            answer={formatNumber(exampleRoot)}
+            onUse={() =>
+              calculator.setMany({
+                ...INITIAL,
+                mode: "root",
+                radicand: "27",
+                index: "3",
+              })
+            }
           />
-        )
+        </div>
+      }
+      notes={
+        <GuidanceBlock
+          mistakes={[
+            "Menganggap pangkat negatif menghasilkan bilangan negatif. Padahal a⁻ⁿ = 1 ÷ aⁿ, jadi 5⁻² = 0,04, bukan −25.",
+            "Menghitung akar genap dari bilangan negatif, misalnya √(−9), yang bukan bilangan real.",
+            "Menukar bilangan pokok dan pangkat, sehingga 2³ dihitung sebagai 3² = 9, padahal hasilnya 8.",
+            "Memasukkan indeks akar 1, yang tidak mengubah bilangan tetapi membuat bentuk akar tidak bermakna.",
+          ]}
+          tips={[
+            "Periksa hasil akar dengan memangkatkannya kembali: jika 3³ = 27, maka ∛27 = 3 sudah benar.",
+            "Ingat bahwa ⁿ√a sama dengan a^(1/n), sehingga kalkulator pangkat dapat dipakai untuk memeriksa hasil akar.",
+            "Untuk pangkat negatif, hitung dulu pangkat positifnya, lalu balik menjadi pecahan 1 dibagi hasil tersebut.",
+          ]}
+        />
       }
     >
       <SelectField

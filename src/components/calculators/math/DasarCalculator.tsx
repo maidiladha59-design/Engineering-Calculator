@@ -3,6 +3,7 @@
 import { CalculatorLayout } from "@/components/calculator/CalculatorLayout";
 import { ExampleBlock } from "@/components/calculator/ExampleBlock";
 import { FormulaBlock } from "@/components/calculator/FormulaBlock";
+import { GuidanceBlock } from "@/components/calculator/GuidanceBlock";
 import { NumberField } from "@/components/calculator/NumberField";
 import { ResultCard } from "@/components/calculator/ResultCard";
 import { SelectField } from "@/components/calculator/SelectField";
@@ -93,7 +94,9 @@ export default function DasarCalculator(props: {
     });
   }
 
-  const exampleResult = basicArithmetic(12.5, 7.5, "+");
+  const exampleSum = basicArithmetic(12.5, 7.5, "+");
+  const exampleDivision = basicArithmetic(18, 6, "÷");
+  const exampleProduct = basicArithmetic(7, 8, "×");
 
   return (
     <CalculatorLayout
@@ -126,10 +129,46 @@ a \div b &= c \qquad (b \neq 0)
         />
       }
       example={
-        <ExampleBlock
-          problem="Hitung 12,5 + 7,5."
-          detail="Angka pertama 12,5 dan angka kedua 7,5 dijumlahkan menggunakan operasi penjumlahan."
-          answer={formatNumber(exampleResult)}
+        <div className="grid gap-4 md:grid-cols-2">
+          <ExampleBlock
+            problem="Hitung 12,5 + 7,5."
+            detail="Angka pertama 12,5 dan angka kedua 7,5 dijumlahkan menggunakan operasi penjumlahan."
+            answer={formatNumber(exampleSum)}
+            onUse={() =>
+              calculator.setMany({ ...INITIAL, a: "12.5", b: "7.5", operator: "+" })
+            }
+          />
+          <ExampleBlock
+            problem="Hitung 18 ÷ 6."
+            detail="Pembagian valid karena pembagi 6 bukan nol."
+            answer={formatNumber(exampleDivision)}
+            onUse={() =>
+              calculator.setMany({ ...INITIAL, a: "18", b: "6", operator: "÷" })
+            }
+          />
+          <ExampleBlock
+            problem="Hitung 7 × 8."
+            detail="Perkalian diterapkan pada kedua angka untuk memperoleh hasil."
+            answer={formatNumber(exampleProduct)}
+            onUse={() =>
+              calculator.setMany({ ...INITIAL, a: "7", b: "8", operator: "×" })
+            }
+          />
+        </div>
+      }
+      notes={
+        <GuidanceBlock
+          mistakes={[
+            "Membagi dengan nol. Pembagian seperti 5 ÷ 0 tidak terdefinisi, bukan 0 atau tak hingga.",
+            "Mengabaikan urutan operasi saat menggabungkan beberapa perhitungan. Hitung isi tanda kurung lebih dahulu.",
+            "Membulatkan hasil antara terlalu awal, sehingga hasil akhir bergeser dari nilai sebenarnya.",
+            "Menganggap hasil pembagian selalu bilangan bulat, padahal hasilnya bisa desimal atau pecahan.",
+          ]}
+          tips={[
+            "Periksa hasil dengan operasi kebalikan, misalnya penjumlahan dengan pengurangan atau perkalian dengan pembagian.",
+            "Gunakan tanda kurung ketika ragu tentang urutan operasi.",
+            "Desimal boleh ditulis dengan koma atau titik; kalkulator menormalkan keduanya.",
+          ]}
         />
       }
     >
