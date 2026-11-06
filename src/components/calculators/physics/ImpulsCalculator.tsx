@@ -9,7 +9,7 @@ import { SelectField } from "@/components/calculator/SelectField";
 import { StepsList, type StepItem } from "@/components/calculator/StepsList";
 import { VariableTable } from "@/components/calculator/VariableTable";
 import { useCalculatorState } from "@/components/calculator/useCalculatorState";
-import { MeasurementField } from "@/components/calculators/physics/MeasurementField";
+import { MeasurementField } from "@/components/calculator/MeasurementField";
 import { conversionStep } from "@/components/calculators/physics/helpers";
 import { formatNumber } from "@/lib/format";
 import {

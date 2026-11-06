@@ -1,4 +1,10 @@
-export type CategorySlug = "matematika" | "fisika";
+export type CategorySlug =
+  | "matematika"
+  | "fisika"
+  | "mekanika-teknik"
+  | "teknik-elektro"
+  | "teknik-sipil"
+  | "matematika-komputer";
 
 export type CalculatorStatus = "active" | "coming-soon";
 
@@ -32,6 +38,34 @@ export const categories: Category[] = [
     description:
       "Mekanika dasar: gerak, gaya, usaha dan energi, daya, momentum, impuls, tekanan, serta massa jenis.",
     tagline: "Gerak, gaya, dan energi",
+  },
+  {
+    slug: "mekanika-teknik",
+    name: "Mekanika Teknik",
+    description:
+      "Momen gaya, torsi, keseimbangan balok, pusat massa, momen inersia, energi rotasi, tegangan-regangan, dan modulus elastisitas.",
+    tagline: "Gaya, momen, dan konstruksi",
+  },
+  {
+    slug: "teknik-elektro",
+    name: "Teknik Elektro",
+    description:
+      "Hukum Ohm, daya listrik, resistansi kawat, rangkaian seri-paralel, energi listrik, dan konversi satuan listrik.",
+    tagline: "Rangkaian dan daya listrik",
+  },
+  {
+    slug: "teknik-sipil",
+    name: "Teknik Sipil",
+    description:
+      "Volume beton, balok, kolom, luas bangunan, kebutuhan material, campuran beton, dan berat besi beton.",
+    tagline: "Volume dan material bangunan",
+  },
+  {
+    slug: "matematika-komputer",
+    name: "Matematika Komputer",
+    description:
+      "Konversi dan aritmatika bilangan biner, heksadesimal, dan oktal dengan langkah per bit yang transparan.",
+    tagline: "Biner, heksadesimal, oktal",
   },
 ];
 
@@ -315,6 +349,324 @@ export const calculators: Calculator[] = [
     keywords: ["gaya gesek", "gesekan", "friksi", "koefisien gesek"],
     status: "coming-soon",
   },
+  {
+    slug: "momen-gaya",
+    name: "Momen Gaya",
+    category: "mekanika-teknik",
+    description:
+      "Hitung momen gaya terhadap titik acuan dengan rumus M = F × d × sin θ, lengkap dengan lengan momen dan arah putaran.",
+    keywords: [
+      "momen gaya",
+      "momen",
+      "torsi",
+      "lengan momen",
+      "gaya",
+      "sin theta",
+      "m = f d",
+      "mekanika",
+    ],
+    status: "active",
+  },
+  {
+    slug: "torsi",
+    name: "Torsi",
+    category: "mekanika-teknik",
+    description:
+      "Hitung torsi pada poros berjari-jari r dari gaya yang membentuk sudut tertentu, beserta komponen gaya tangensial.",
+    keywords: ["torsi", "torque", "poros", "jari-jari", "gaya tangensial", "momen putar"],
+    status: "active",
+  },
+  {
+    slug: "keseimbangan-benda",
+    name: "Keseimbangan Benda",
+    category: "mekanika-teknik",
+    description:
+      "Hitung reaksi tumpuan kiri dan kanan balok sederhana yang menahan beban titik pada posisi tertentu.",
+    keywords: [
+      "keseimbangan benda",
+      "reaksi tumpuan",
+      "balok sederhana",
+      "reaksi kiri",
+      "reaksi kanan",
+      "statika",
+      "beban titik",
+    ],
+    status: "active",
+  },
+  {
+    slug: "pusat-massa",
+    name: "Pusat Massa",
+    category: "mekanika-teknik",
+    description:
+      "Hitung koordinat pusat massa dari beberapa titik bermassa pada bidang dua dimensi dengan input titik dinamis.",
+    keywords: ["pusat massa", "center of mass", "titik berat", "koordinat", "massa titik"],
+    status: "active",
+  },
+  {
+    slug: "momen-inersia",
+    name: "Momen Inersia",
+    category: "mekanika-teknik",
+    description:
+      "Hitung momen inersia silinder pejal, bola pejal, dan batang dengan memilih bentuk benda serta sumbu putar.",
+    keywords: [
+      "momen inersia",
+      "inertia",
+      "silinder",
+      "bola",
+      "batang",
+      "sumbu putar",
+      "rotasi",
+    ],
+    status: "active",
+  },
+  {
+    slug: "energi-kinetik-rotasi",
+    name: "Energi Kinetik Rotasi",
+    category: "mekanika-teknik",
+    description:
+      "Hitung energi kinetik benda yang berputar dari momen inersia dan kecepatan sudut, dengan dukungan satuan rpm.",
+    keywords: ["energi kinetik rotasi", "rotasi", "momen inersia", "rad/s", "rpm", "energi putar"],
+    status: "active",
+  },
+  {
+    slug: "tegangan-regangan",
+    name: "Tegangan & Regangan",
+    category: "mekanika-teknik",
+    description:
+      "Hitung tegangan normal dan regangan aksial dari gaya, luas penampang, panjang awal, serta perubahan panjang.",
+    keywords: [
+      "tegangan",
+      "regangan",
+      "stress",
+      "strain",
+      "tegangan normal",
+      "regangan aksial",
+      "mekanika bahan",
+    ],
+    status: "active",
+  },
+  {
+    slug: "modulus-elastisitas",
+    name: "Modulus Elastisitas",
+    category: "mekanika-teknik",
+    description:
+      "Cari modulus elastisitas, tegangan, atau regangan menggunakan hubungan E = σ / ε dengan mode perhitungan yang jelas.",
+    keywords: [
+      "modulus elastisitas",
+      "modulus young",
+      "young modulus",
+      "tegangan",
+      "regangan",
+      "hukum hooke",
+    ],
+    status: "active",
+  },
+  {
+    slug: "hukum-ohm",
+    name: "Hukum Ohm",
+    category: "teknik-elektro",
+    description:
+      "Hitung tegangan, arus, atau hambatan menggunakan V = I × R dengan konversi satuan volt, ampere, dan ohm.",
+    keywords: ["hukum ohm", "ohm", "tegangan", "arus", "hambatan", "v = i r", "listrik"],
+    status: "active",
+  },
+  {
+    slug: "daya-listrik",
+    name: "Daya Listrik",
+    category: "teknik-elektro",
+    description:
+      "Hitung daya listrik dengan tiga metode: P = V × I, P = I² × R, atau P = V² / R, lengkap dengan langkah.",
+    keywords: ["daya listrik", "watt", "p = vi", "i kuadrat r", "v kuadrat r", "energi listrik"],
+    status: "active",
+  },
+  {
+    slug: "resistansi-kawat",
+    name: "Resistansi Kawat",
+    category: "teknik-elektro",
+    description:
+      "Hitung hambatan kawat penghantar menggunakan R = ρ × L / A dengan input resistivitas, panjang, dan luas penampang.",
+    keywords: [
+      "resistansi kawat",
+      "hambatan kawat",
+      "resistivitas",
+      "rho",
+      "r = rho l / a",
+      "kawat tembaga",
+    ],
+    status: "active",
+  },
+  {
+    slug: "rangkaian-seri-paralel",
+    name: "Rangkaian Seri & Paralel",
+    category: "teknik-elektro",
+    description:
+      "Hitung hambatan pengganti, tegangan, dan arus tiap cabang untuk rangkaian resistor seri atau paralel dengan jumlah resistor dinamis.",
+    keywords: [
+      "rangkaian seri",
+      "rangkaian paralel",
+      "resistor",
+      "hambatan pengganti",
+      "arus cabang",
+      "tegangan cabang",
+    ],
+    status: "active",
+  },
+  {
+    slug: "energi-listrik",
+    name: "Energi Listrik",
+    category: "teknik-elektro",
+    description:
+      "Hitung energi listrik dalam kWh dan joule serta estimasi biaya berdasarkan daya, waktu pemakaian, dan tarif listrik.",
+    keywords: ["energi listrik", "kwh", "joule", "biaya listrik", "tarif listrik", "daya"],
+    status: "active",
+  },
+  {
+    slug: "konversi-satuan-listrik",
+    name: "Konversi Satuan Listrik",
+    category: "teknik-elektro",
+    description:
+      "Konversi satuan tegangan, arus, hambatan, daya, dan energi listrik secara dua arah dengan tabel hasil lengkap.",
+    keywords: [
+      "konversi satuan listrik",
+      "volt ke milivolt",
+      "ampere ke miliampere",
+      "ohm ke kiloohm",
+      "watt ke kilowatt",
+    ],
+    status: "active",
+  },
+  {
+    slug: "volume-beton",
+    name: "Volume Beton",
+    category: "teknik-sipil",
+    description:
+      "Hitung volume beton untuk pelat atau elemen persegi panjang dari panjang, lebar, dan tebal, dalam meter kubik.",
+    keywords: ["volume beton", "beton", "pelat beton", "meter kubik", "cor beton", "volume"],
+    status: "active",
+  },
+  {
+    slug: "volume-balok",
+    name: "Volume Balok",
+    category: "teknik-sipil",
+    description:
+      "Hitung volume balok beton dari dimensi panjang, lebar, dan tinggi, beserta estimasi volume dalam liter.",
+    keywords: ["volume balok", "balok beton", "dimensi balok", "meter kubik", "liter"],
+    status: "active",
+  },
+  {
+    slug: "volume-kolom",
+    name: "Volume Kolom",
+    category: "teknik-sipil",
+    description:
+      "Hitung volume kolom beton berbentuk persegi panjang atau bulat berdasarkan dimensi penampang dan tinggi kolom.",
+    keywords: ["volume kolom", "kolom beton", "kolom bulat", "kolom persegi", "meter kubik"],
+    status: "active",
+  },
+  {
+    slug: "luas-bangunan",
+    name: "Luas Bangunan",
+    category: "teknik-sipil",
+    description:
+      "Hitung luas lantai bangunan dari panjang, lebar, dan jumlah lantai untuk estimasi luas bangunan total.",
+    keywords: ["luas bangunan", "luas lantai", "jumlah lantai", "meter persegi", "renovasi"],
+    status: "active",
+  },
+  {
+    slug: "kebutuhan-material",
+    name: "Kebutuhan Material Beton",
+    category: "teknik-sipil",
+    description:
+      "Estimasi kebutuhan semen, pasir, dan kerikil untuk volume beton tertentu dengan campuran 1:2:3 atau 1:2:4.",
+    keywords: [
+      "kebutuhan material",
+      "semen",
+      "pasir",
+      "kerikil",
+      "campuran beton",
+      "1:2:3",
+      "1:2:4",
+    ],
+    status: "active",
+  },
+  {
+    slug: "campuran-beton",
+    name: "Campuran Beton",
+    category: "teknik-sipil",
+    description:
+      "Hitung takaran pasir, kerikil, dan perkiraan air per sak semen untuk campuran beton 1:2:3 atau 1:2:4.",
+    keywords: ["campuran beton", "takaran beton", "semen pasir kerikil", "per sak", "1:2:3", "1:2:4"],
+    status: "active",
+  },
+  {
+    slug: "berat-besi",
+    name: "Berat Besi Beton",
+    category: "teknik-sipil",
+    description:
+      "Hitung berat besi beton dari diameter, panjang, dan jumlah batang menggunakan massa jenis baja 7.850 kg/m³.",
+    keywords: [
+      "berat besi",
+      "besi beton",
+      "berat besi per meter",
+      "diameter besi",
+      "tulangan",
+      "kg",
+    ],
+    status: "active",
+  },
+  {
+    slug: "bilangan-biner",
+    name: "Bilangan Biner",
+    category: "matematika-komputer",
+    description:
+      "Ubah bilangan biner menjadi desimal, heksadesimal, dan oktal, lengkap dengan nilai tempat setiap bit.",
+    keywords: ["bilangan biner", "biner", "binary", "biner ke desimal", "bit", "nilai tempat"],
+    status: "active",
+  },
+  {
+    slug: "penjumlahan-biner",
+    name: "Penjumlahan Biner",
+    category: "matematika-komputer",
+    description:
+      "Jumlahkan dua bilangan biner dengan tabel per bit yang menampilkan carry masuk dan carry keluar.",
+    keywords: ["penjumlahan biner", "tambah biner", "carry", "aritmatika biner", "binary addition"],
+    status: "active",
+  },
+  {
+    slug: "pengurangan-biner",
+    name: "Pengurangan Biner",
+    category: "matematika-komputer",
+    description:
+      "Kurangkan dua bilangan biner dengan tabel per bit yang menampilkan proses pinjaman (borrow).",
+    keywords: ["pengurangan biner", "kurang biner", "borrow", "pinjaman", "aritmatika biner"],
+    status: "active",
+  },
+  {
+    slug: "konversi-biner-desimal",
+    name: "Konversi Biner ↔ Desimal",
+    category: "matematika-komputer",
+    description:
+      "Konversi biner ke desimal atau desimal ke biner dengan langkah nilai tempat dan pembagian berulang.",
+    keywords: ["konversi biner", "biner ke desimal", "desimal ke biner", "konversi bilangan"],
+    status: "active",
+  },
+  {
+    slug: "heksadesimal",
+    name: "Heksadesimal",
+    category: "matematika-komputer",
+    description:
+      "Konversi bilangan heksadesimal ke desimal atau sebaliknya, dengan dukungan bilangan besar dan langkah nilai tempat.",
+    keywords: ["heksadesimal", "hex", "hexadecimal", "ff", "konversi hex", "desimal ke hex"],
+    status: "active",
+  },
+  {
+    slug: "oktal",
+    name: "Oktal",
+    category: "matematika-komputer",
+    description:
+      "Konversi bilangan oktal ke desimal atau desimal ke oktal dengan validasi digit 0–7 dan langkah perhitungan.",
+    keywords: ["oktal", "octal", "konversi oktal", "basis 8", "desimal ke oktal"],
+    status: "active",
+  },
 ];
 
 export function getCategory(slug: string): Category | undefined {
@@ -353,10 +705,12 @@ export function getPopularCalculators(limit = 6): Calculator[] {
   const preferred = [
     "dasar",
     "persentase",
+    "hukum-ohm",
     "kecepatan",
-    "gaya",
+    "momen-gaya",
+    "volume-beton",
+    "bilangan-biner",
     "usaha-energi",
-    "persamaan-kuadrat",
   ];
 
   return preferred

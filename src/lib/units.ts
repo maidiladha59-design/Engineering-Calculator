@@ -87,6 +87,73 @@ export const DENSITY_UNITS: UnitDefinition[] = [
   { value: "g/cm3", label: "Gram per sentimeter kubik (g/cm³)", symbol: "g/cm³", factor: 1000 },
 ];
 
+export const ANGLE_UNITS: UnitDefinition[] = [
+  { value: "deg", label: "Derajat (°)", symbol: "°", factor: 1 },
+  { value: "rad", label: "Radian (rad)", symbol: "rad", factor: 180 / Math.PI },
+];
+
+export const ANGULAR_SPEED_UNITS: UnitDefinition[] = [
+  { value: "rad/s", label: "Radian per detik (rad/s)", symbol: "rad/s", factor: 1 },
+  {
+    value: "rpm",
+    label: "Putaran per menit (rpm)",
+    symbol: "rpm",
+    factor: (2 * Math.PI) / 60,
+  },
+];
+
+export const MOMENT_UNITS: UnitDefinition[] = [
+  { value: "N.m", label: "Newton meter (N·m)", symbol: "N·m", factor: 1 },
+  { value: "kN.m", label: "Kilonewton meter (kN·m)", symbol: "kN·m", factor: 1000 },
+];
+
+export const INERTIA_UNITS: UnitDefinition[] = [
+  { value: "kg.m2", label: "Kilogram meter persegi (kg·m²)", symbol: "kg·m²", factor: 1 },
+];
+
+export const VOLTAGE_UNITS: UnitDefinition[] = [
+  { value: "V", label: "Volt (V)", symbol: "V", factor: 1 },
+  { value: "mV", label: "Milivolt (mV)", symbol: "mV", factor: 0.001 },
+  { value: "kV", label: "Kilovolt (kV)", symbol: "kV", factor: 1000 },
+];
+
+export const CURRENT_UNITS: UnitDefinition[] = [
+  { value: "A", label: "Ampere (A)", symbol: "A", factor: 1 },
+  { value: "mA", label: "Miliampere (mA)", symbol: "mA", factor: 0.001 },
+];
+
+export const RESISTANCE_UNITS: UnitDefinition[] = [
+  { value: "ohm", label: "Ohm (Ω)", symbol: "Ω", factor: 1 },
+  { value: "kohm", label: "Kiloohm (kΩ)", symbol: "kΩ", factor: 1000 },
+  { value: "Mohm", label: "Megaohm (MΩ)", symbol: "MΩ", factor: 1000000 },
+];
+
+export const CHARGE_UNITS: UnitDefinition[] = [
+  { value: "C", label: "Coulomb (C)", symbol: "C", factor: 1 },
+  { value: "Ah", label: "Ampere jam (Ah)", symbol: "Ah", factor: 3600 },
+];
+
+export const ELECTRICAL_ENERGY_UNITS: UnitDefinition[] = [
+  { value: "J", label: "Joule (J)", symbol: "J", factor: 1 },
+  { value: "kJ", label: "Kilojoule (kJ)", symbol: "kJ", factor: 1000 },
+  { value: "kWh", label: "Kilowatt jam (kWh)", symbol: "kWh", factor: 3600000 },
+];
+
+export const STRESS_UNITS: UnitDefinition[] = [
+  { value: "Pa", label: "Pascal (Pa)", symbol: "Pa", factor: 1 },
+  { value: "kPa", label: "Kilopascal (kPa)", symbol: "kPa", factor: 1000 },
+  { value: "MPa", label: "Megapascal (MPa)", symbol: "MPa", factor: 1000000 },
+  { value: "GPa", label: "Gigapascal (GPa)", symbol: "GPa", factor: 1000000000 },
+];
+
+export const AREA_UNITS_LARGE: UnitDefinition[] = [
+  { value: "m2", label: "Meter persegi (m²)", symbol: "m²", factor: 1 },
+  { value: "are", label: "Are (are)", symbol: "are", factor: 100 },
+  { value: "ha", label: "Hektare (ha)", symbol: "ha", factor: 10000 },
+  { value: "km2", label: "Kilometer persegi (km²)", symbol: "km²", factor: 1000000 },
+];
+
+
 export function findUnit(
   unitValue: string,
   units: UnitDefinition[],

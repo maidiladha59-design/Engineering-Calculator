@@ -54,3 +54,39 @@ export function formatPercent(value: number, digits = 2): string {
 export function formatCoordinate(value: number): string {
   return formatNumber(value);
 }
+
+export function formatStress(pascal: number): string {
+  if (!Number.isFinite(pascal)) {
+    return "Tidak terdefinisi";
+  }
+
+  const absolute = Math.abs(pascal);
+
+  if (absolute >= 1e9) {
+    return `${formatNumber(pascal / 1e9)} GPa`;
+  }
+
+  if (absolute >= 1e6) {
+    return `${formatNumber(pascal / 1e6)} MPa`;
+  }
+
+  if (absolute >= 1e3) {
+    return `${formatNumber(pascal / 1e3)} kPa`;
+  }
+
+  return `${formatNumber(pascal)} Pa`;
+}
+
+const rupiahFormatter = new Intl.NumberFormat("id-ID", {
+  style: "currency",
+  currency: "IDR",
+  maximumFractionDigits: 0,
+});
+
+export function formatRupiah(value: number): string {
+  if (!Number.isFinite(value)) {
+    return "Tidak terdefinisi";
+  }
+
+  return rupiahFormatter.format(normalizeZero(value));
+}

@@ -74,6 +74,16 @@ export function useCalculatorState<T extends Record<string, string>>(initial: T)
     setState({ isCalculating: false, error: null, result: null });
   }, [clearTimer, initial]);
 
+  const setMany = useCallback(
+    (values: Partial<T>) => {
+      clearTimer();
+      setForm((previous) => ({ ...previous, ...values }));
+      setErrors({});
+      setState({ isCalculating: false, error: null, result: null });
+    },
+    [clearTimer],
+  );
+
   const showError = useCallback((message: string) => {
     setState({ isCalculating: false, error: message, result: null });
   }, []);
@@ -84,6 +94,7 @@ export function useCalculatorState<T extends Record<string, string>>(initial: T)
     errors,
     setFieldErrors,
     reset,
+    setMany,
     run,
     showError,
     isCalculating: state.isCalculating,

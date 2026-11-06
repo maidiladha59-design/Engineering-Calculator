@@ -36,7 +36,7 @@ export function Navbar() {
           <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-900 text-white">
             <Sigma className="h-5 w-5" aria-hidden="true" />
           </span>
-          <span className="leading-tight">
+          <span className="max-w-[6rem] leading-tight sm:max-w-none">
             <span className="block text-[13px] font-extrabold uppercase tracking-wide text-slate-900">
               Engineering Calculator
             </span>

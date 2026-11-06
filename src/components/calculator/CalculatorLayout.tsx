@@ -19,6 +19,7 @@ export interface CalculatorLayoutProps extends CalculatorComponentProps {
   formula?: ReactNode;
   variables?: ReactNode;
   example?: ReactNode;
+  notes?: ReactNode;
 }
 
 function ResultSkeleton() {
@@ -88,6 +89,7 @@ export function CalculatorLayout({
   formula,
   variables,
   example,
+  notes,
 }: CalculatorLayoutProps) {
   return (
     <div>
@@ -167,6 +169,8 @@ export function CalculatorLayout({
           {example ? <div className="lg:col-span-2">{example}</div> : null}
         </div>
       ) : null}
+
+      {notes ? <div className="mt-8">{notes}</div> : null}
     </div>
   );
 }

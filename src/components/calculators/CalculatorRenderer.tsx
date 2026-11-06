@@ -66,6 +66,112 @@ const MassaJenisCalculator = dynamic(
   () => import("./physics/MassaJenisCalculator"),
   { loading },
 );
+const MomenGayaCalculator = dynamic(
+  () => import("./mechanics/MomenGayaCalculator"),
+  { loading },
+);
+const TorsiCalculator = dynamic(() => import("./mechanics/TorsiCalculator"), {
+  loading,
+});
+const KeseimbanganBendaCalculator = dynamic(
+  () => import("./mechanics/KeseimbanganBendaCalculator"),
+  { loading },
+);
+const PusatMassaCalculator = dynamic(
+  () => import("./mechanics/PusatMassaCalculator"),
+  { loading },
+);
+const MomenInersiaCalculator = dynamic(
+  () => import("./mechanics/MomenInersiaCalculator"),
+  { loading },
+);
+const EnergiKinetikRotasiCalculator = dynamic(
+  () => import("./mechanics/EnergiKinetikRotasiCalculator"),
+  { loading },
+);
+const TeganganReganganCalculator = dynamic(
+  () => import("./mechanics/TeganganReganganCalculator"),
+  { loading },
+);
+const ModulusElastisitasCalculator = dynamic(
+  () => import("./mechanics/ModulusElastisitasCalculator"),
+  { loading },
+);
+const HukumOhmCalculator = dynamic(
+  () => import("./electro/HukumOhmCalculator"),
+  { loading },
+);
+const DayaListrikCalculator = dynamic(
+  () => import("./electro/DayaListrikCalculator"),
+  { loading },
+);
+const ResistansiKawatCalculator = dynamic(
+  () => import("./electro/ResistansiKawatCalculator"),
+  { loading },
+);
+const RangkaianSeriParalelCalculator = dynamic(
+  () => import("./electro/RangkaianSeriParalelCalculator"),
+  { loading },
+);
+const EnergiListrikCalculator = dynamic(
+  () => import("./electro/EnergiListrikCalculator"),
+  { loading },
+);
+const KonversiSatuanListrikCalculator = dynamic(
+  () => import("./electro/KonversiSatuanListrikCalculator"),
+  { loading },
+);
+const VolumeBetonCalculator = dynamic(
+  () => import("./civil/VolumeBetonCalculator"),
+  { loading },
+);
+const VolumeBalokCalculator = dynamic(
+  () => import("./civil/VolumeBalokCalculator"),
+  { loading },
+);
+const VolumeKolomCalculator = dynamic(
+  () => import("./civil/VolumeKolomCalculator"),
+  { loading },
+);
+const LuasBangunanCalculator = dynamic(
+  () => import("./civil/LuasBangunanCalculator"),
+  { loading },
+);
+const KebutuhanMaterialCalculator = dynamic(
+  () => import("./civil/KebutuhanMaterialCalculator"),
+  { loading },
+);
+const CampuranBetonCalculator = dynamic(
+  () => import("./civil/CampuranBetonCalculator"),
+  { loading },
+);
+const BeratBesiCalculator = dynamic(
+  () => import("./civil/BeratBesiCalculator"),
+  { loading },
+);
+const BilanganBinerCalculator = dynamic(
+  () => import("./binary/BilanganBinerCalculator"),
+  { loading },
+);
+const PenjumlahanBinerCalculator = dynamic(
+  () => import("./binary/PenjumlahanBinerCalculator"),
+  { loading },
+);
+const PenguranganBinerCalculator = dynamic(
+  () => import("./binary/PenguranganBinerCalculator"),
+  { loading },
+);
+const KonversiBinerDesimalCalculator = dynamic(
+  () => import("./binary/KonversiBinerDesimalCalculator"),
+  { loading },
+);
+const HeksadesimalCalculator = dynamic(
+  () => import("./binary/HeksadesimalCalculator"),
+  { loading },
+);
+const OktalCalculator = dynamic(() => import("./binary/OktalCalculator"), {
+  loading,
+});
 
 const REGISTRY: Record<string, ComponentType<CalculatorComponentProps>> = {
   dasar: DasarCalculator,
@@ -84,6 +190,33 @@ const REGISTRY: Record<string, ComponentType<CalculatorComponentProps>> = {
   impuls: ImpulsCalculator,
   tekanan: TekananCalculator,
   "massa-jenis": MassaJenisCalculator,
+  "momen-gaya": MomenGayaCalculator,
+  torsi: TorsiCalculator,
+  "keseimbangan-benda": KeseimbanganBendaCalculator,
+  "pusat-massa": PusatMassaCalculator,
+  "momen-inersia": MomenInersiaCalculator,
+  "energi-kinetik-rotasi": EnergiKinetikRotasiCalculator,
+  "tegangan-regangan": TeganganReganganCalculator,
+  "modulus-elastisitas": ModulusElastisitasCalculator,
+  "hukum-ohm": HukumOhmCalculator,
+  "daya-listrik": DayaListrikCalculator,
+  "resistansi-kawat": ResistansiKawatCalculator,
+  "rangkaian-seri-paralel": RangkaianSeriParalelCalculator,
+  "energi-listrik": EnergiListrikCalculator,
+  "konversi-satuan-listrik": KonversiSatuanListrikCalculator,
+  "volume-beton": VolumeBetonCalculator,
+  "volume-balok": VolumeBalokCalculator,
+  "volume-kolom": VolumeKolomCalculator,
+  "luas-bangunan": LuasBangunanCalculator,
+  "kebutuhan-material": KebutuhanMaterialCalculator,
+  "campuran-beton": CampuranBetonCalculator,
+  "berat-besi": BeratBesiCalculator,
+  "bilangan-biner": BilanganBinerCalculator,
+  "penjumlahan-biner": PenjumlahanBinerCalculator,
+  "pengurangan-biner": PenguranganBinerCalculator,
+  "konversi-biner-desimal": KonversiBinerDesimalCalculator,
+  heksadesimal: HeksadesimalCalculator,
+  oktal: OktalCalculator,
 };
 
 export function CalculatorRenderer({
