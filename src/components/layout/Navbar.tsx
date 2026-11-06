@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Menu, Search, Sigma, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { SearchBox } from "@/components/search/SearchBox";
@@ -18,6 +18,7 @@ const NAV_LINKS = [
 
 export function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
@@ -61,6 +62,9 @@ export function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
+                prefetch={false}
+                onMouseEnter={() => router.prefetch(link.href)}
+                onFocus={() => router.prefetch(link.href)}
                 className={cn(
                   "rounded-lg px-3 py-2 text-sm font-medium transition",
                   isActive

@@ -219,6 +219,7 @@ export default function KecepatanCalculator(props: {
 
       const result = timeFromSpeed(distanceM, speedMS);
       const resultMinutes = result / 60;
+      const resultHours = result / 3600;
 
       steps.push(
         {
@@ -227,7 +228,7 @@ export default function KecepatanCalculator(props: {
         },
         {
           title: "Hitung hasil",
-          detail: `t = ${formatNumber(result)} s = ${formatNumber(resultMinutes)} menit`,
+          detail: `t = ${formatNumber(result)} s = ${formatNumber(resultMinutes)} menit = ${formatNumber(resultHours)} jam`,
         },
       );
 
@@ -238,7 +239,10 @@ export default function KecepatanCalculator(props: {
             value={formatNumber(result)}
             unit="s"
             rows={[
-              { label: "Ekuivalen", value: `${formatNumber(resultMinutes)} menit` },
+              {
+                label: "Ekuivalen",
+                value: `${formatNumber(resultMinutes)} menit (${formatNumber(resultHours)} jam)`,
+              },
               { label: "Jarak (SI)", value: `${formatNumber(distanceM)} m` },
               { label: "Kecepatan (SI)", value: `${formatNumber(speedMS)} m/s` },
             ]}

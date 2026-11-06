@@ -110,6 +110,7 @@ export default function HomePage() {
           </div>
           <Link
             href="/kalkulator"
+            prefetch={false}
             className="text-sm font-semibold text-indigo-600 transition hover:text-indigo-800"
           >
             Semua kalkulator →
@@ -126,6 +127,7 @@ export default function HomePage() {
               <Link
                 key={category.slug}
                 href={`/kalkulator/${category.slug}`}
+                prefetch={false}
                 className="group flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-indigo-200 hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 <div className="flex items-center justify-between">
@@ -165,7 +167,7 @@ export default function HomePage() {
         />
       ) : null}
 
-      <section className="mt-12">
+      <section className="defer-render mt-12">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
             <h2 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
@@ -194,7 +196,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="mt-12">
+      <section className="defer-render mt-12">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
             <h2 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
@@ -217,7 +219,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="mt-12 rounded-3xl border border-slate-200 bg-white px-5 py-8 shadow-sm sm:px-8">
+      <section className="defer-render mt-12 rounded-3xl border border-slate-200 bg-white px-5 py-8 shadow-sm sm:px-8">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div className="max-w-2xl">
             <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-indigo-600">
@@ -271,7 +273,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="mt-12 rounded-3xl bg-slate-900 px-5 py-8 text-white sm:px-8 sm:py-10">
+      <section className="defer-render mt-12 rounded-3xl bg-slate-900 px-5 py-8 text-white sm:px-8 sm:py-10">
         <h2 className="text-xl font-bold tracking-tight sm:text-2xl">
           Bukan sekadar hasil
         </h2>

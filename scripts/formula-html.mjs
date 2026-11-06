@@ -26,7 +26,7 @@ function walk(dir) {
       files.push(...walk(full));
     } else if (
       /\.(ts|tsx)$/.test(entry.name) &&
-      !/\.test\.ts$/.test(entry.name) &&
+      !/\.test\.(ts|tsx)$/.test(entry.name) &&
       !/\.d\.ts$/.test(entry.name)
     ) {
       files.push(full);
