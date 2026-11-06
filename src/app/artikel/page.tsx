@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   title: "Artikel Edukasi Teknik",
   description:
     "Artikel edukasi tentang hukum Ohm, momen gaya, bilangan biner, konversi satuan, suhu, dan volume beton. Penjelasan rumus, contoh, dan kesalahan umum.",
+  alternates: {
+    canonical: "/artikel",
+  },
 };
 
 export default function ArticlesPage() {

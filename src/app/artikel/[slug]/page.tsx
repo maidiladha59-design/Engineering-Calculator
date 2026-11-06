@@ -4,8 +4,10 @@ import { notFound } from "next/navigation";
 import { ArrowRight, Clock } from "lucide-react";
 import { FormulaBlock } from "@/components/calculator/FormulaBlock";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { getArticle, articles } from "@/data/articles";
 import { getCalculator } from "@/data/calculators";
+import { absoluteUrl, OG_IMAGE, SITE_NAME } from "@/lib/site";
 
 type ArticlePageProps = {
   params: { slug: string };
@@ -30,11 +32,22 @@ export async function generateMetadata({
     title: article.title,
     description: article.description,
     keywords: article.keywords,
+    alternates: {
+      canonical: `/artikel/${article.slug}`,
+    },
     openGraph: {
       title: `${article.title} | Engineering Calculator`,
       description: article.description,
       type: "article",
       publishedTime: article.publishedAt,
+      url: `/artikel/${article.slug}`,
+      images: [OG_IMAGE],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${article.title} | Engineering Calculator`,
+      description: article.description,
+      images: [OG_IMAGE.url],
     },
   };
 }
@@ -69,6 +82,52 @@ export default function ArticleDetailPage({ params }: ArticlePageProps) {
 
   return (
     <div>
+      <JsonLd
+        data={[
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "Beranda",
+                item: absoluteUrl("/"),
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "Artikel",
+                item: absoluteUrl("/artikel"),
+              },
+              {
+                "@type": "ListItem",
+                position: 3,
+                name: article.title,
+                item: absoluteUrl(`/artikel/${article.slug}`),
+              },
+            ],
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: article.title,
+            description: article.description,
+            datePublished: article.publishedAt,
+            dateModified: article.publishedAt,
+            inLanguage: "id",
+            mainEntityOfPage: absoluteUrl(`/artikel/${article.slug}`),
+            author: {
+              "@type": "Organization",
+              name: SITE_NAME,
+            },
+            publisher: {
+              "@type": "Organization",
+              name: SITE_NAME,
+            },
+          },
+        ]}
+      />
       <Breadcrumbs
         items={[
           { label: "Artikel", href: "/artikel" },

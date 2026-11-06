@@ -2,14 +2,19 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CalculatorRenderer } from "@/components/calculators/CalculatorRenderer";
+import { AdSlot } from "@/components/ads/AdSlot";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { FaqSection } from "@/components/seo/FaqSection";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { getArticlesForCalculator } from "@/data/articles";
+import { getCalculatorFaqs } from "@/data/faqs";
 import {
   calculators,
   getCalculator,
   getCategory,
   getCategoryName,
 } from "@/data/calculators";
+import { absoluteUrl, OG_IMAGE } from "@/lib/site";
 
 type CalculatorPageProps = {
   params: { kategori: string; slug: string };
@@ -41,10 +46,21 @@ export async function generateMetadata({
     title: calculator.name,
     description: calculator.description,
     keywords: calculator.keywords,
+    alternates: {
+      canonical: `/kalkulator/${kategori}/${slug}`,
+    },
     openGraph: {
       title: `${calculator.name} | Engineering Calculator`,
       description: calculator.description,
       type: "website",
+      url: `/kalkulator/${kategori}/${slug}`,
+      images: [OG_IMAGE],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${calculator.name} | Engineering Calculator`,
+      description: calculator.description,
+      images: [OG_IMAGE.url],
     },
   };
 }
@@ -59,9 +75,72 @@ export default function CalculatorPage({ params }: CalculatorPageProps) {
   }
 
   const relatedArticles = getArticlesForCalculator(kategori, slug);
+  const faqs = getCalculatorFaqs(kategori, slug);
+  const pageUrl = absoluteUrl(`/kalkulator/${kategori}/${slug}`);
+
+  const structuredData = [
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Beranda",
+          item: absoluteUrl("/"),
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Kalkulator",
+          item: absoluteUrl("/kalkulator"),
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: category.name,
+          item: absoluteUrl(`/kalkulator/${category.slug}`),
+        },
+        {
+          "@type": "ListItem",
+          position: 4,
+          name: calculator.name,
+          item: pageUrl,
+        },
+      ],
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      name: calculator.name,
+      description: calculator.description,
+      url: pageUrl,
+      applicationCategory: "UtilitiesApplication",
+      operatingSystem: "Any",
+      inLanguage: "id",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "IDR",
+      },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.answer,
+        },
+      })),
+    },
+  ];
 
   return (
     <div>
+      <JsonLd data={structuredData} />
       <Breadcrumbs
         items={[
           { label: "Kalkulator", href: "/kalkulator" },
@@ -80,8 +159,17 @@ export default function CalculatorPage({ params }: CalculatorPageProps) {
         categoryName={getCategoryName(calculator.category)}
       />
 
+      <FaqSection faqs={faqs} />
+
+      {process.env.NEXT_PUBLIC_ADSENSE_SLOT_CONTENT ? (
+        <AdSlot
+          slot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_CONTENT}
+          className="mt-8"
+        />
+      ) : null}
+
       {relatedArticles.length > 0 ? (
-        <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+        <section className="defer-render mt-8 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
           <h2 className="text-sm font-semibold uppercase tracking-wider text-slate-500">
             Artikel terkait
           </h2>

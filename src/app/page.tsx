@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -7,6 +8,8 @@ import {
   Sparkles,
 } from "lucide-react";
 import { SearchBox } from "@/components/search/SearchBox";
+import { AdSlot } from "@/components/ads/AdSlot";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { CalculatorCard } from "@/components/ui/CalculatorCard";
 import { CategoryIcon } from "@/components/ui/CategoryIcon";
 import { getLatestArticles } from "@/data/articles";
@@ -18,6 +21,13 @@ import {
   getLatestCalculators,
   getPopularCalculators,
 } from "@/data/calculators";
+import { absoluteUrl, SITE_DESCRIPTION, SITE_NAME } from "@/lib/site";
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: "/",
+  },
+};
 
 export default function HomePage() {
   const popular = getPopularCalculators(6);
@@ -26,6 +36,16 @@ export default function HomePage() {
 
   return (
     <div>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: SITE_NAME,
+          url: absoluteUrl("/"),
+          inLanguage: "id",
+          description: SITE_DESCRIPTION,
+        }}
+      />
       <section className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white px-5 py-10 shadow-sm sm:px-10 sm:py-14">
         <div
           className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-indigo-100/70 blur-3xl"
@@ -137,6 +157,13 @@ export default function HomePage() {
           })}
         </div>
       </section>
+
+      {process.env.NEXT_PUBLIC_ADSENSE_SLOT_TOP ? (
+        <AdSlot
+          slot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_TOP}
+          className="mt-12"
+        />
+      ) : null}
 
       <section className="mt-12">
         <div className="flex flex-wrap items-end justify-between gap-3">

@@ -1,0 +1,7 @@
+# Template ads.txt untuk Google AdSense.
+# Setelah situs disetujui, buka AdSense > Situs > ads.txt dan salin baris
+# persis seperti yang diberikan Google ke file ini, contoh formatnya:
+# google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
+#
+# Baris di atas sengaja dikomentari agar tidak ada ID publisher palsu
+# yang diterbitkan. Jangan hapus tanda # sebelum ID asli tersedia.

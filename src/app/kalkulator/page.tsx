@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   title: "Semua Kalkulator",
   description:
     "Direktori seluruh kalkulator teknik: matematika, fisika, mekanika, elektro, sipil, matematika komputer, dan konversi satuan, beserta status ketersediaannya.",
+  alternates: {
+    canonical: "/kalkulator",
+  },
 };
 
 export default function CalculatorDirectoryPage() {

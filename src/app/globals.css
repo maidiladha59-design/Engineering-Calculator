@@ -2,6 +2,12 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+@theme {
+  --font-sans:
+    var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+}
+
 :root {
   color-scheme: light;
 }
@@ -16,6 +22,7 @@ html {
 
 body {
   font-family:
+    var(--font-inter),
     ui-sans-serif,
     system-ui,
     -apple-system,
@@ -319,16 +326,37 @@ body {
   --tw-shadow-color: rgba(0, 0, 0, 0.5);
 }
 
+/* Only touch elements that actually declare motion. Applying
+   transition-duration to * gives every node an implicit transition. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
 
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
+  .transition,
+  .transition-all,
+  .transition-colors,
+  .transition-opacity,
+  .transition-shadow,
+  .transition-transform {
     transition-duration: 0.01ms !important;
   }
+
+  .animate-spin,
+  .animate-pulse {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+html[data-consent] .ec-cookie-banner {
+  display: none;
+}
+
+/* Skips style, layout, and paint work for long sections until they approach
+   the viewport. The intrinsic size keeps the scrollbar stable before first
+   render and is then replaced by the real measured height. */
+.defer-render {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 720px;
 }

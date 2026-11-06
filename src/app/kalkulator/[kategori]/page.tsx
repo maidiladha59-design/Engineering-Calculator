@@ -36,6 +36,9 @@ export async function generateMetadata({
     title: `${category.name} — ${active.length} Kalkulator Aktif`,
     description: category.description,
     keywords: [category.name, "kalkulator", ...active.map((item) => item.name)],
+    alternates: {
+      canonical: `/kalkulator/${category.slug}`,
+    },
   };
 }
 

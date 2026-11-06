@@ -1,18 +1,30 @@
 import type { Metadata, Viewport } from "next";
+import { Inter } from "next/font/google";
 import Script from "next/script";
-import "katex/dist/katex.min.css";
 import "./globals.css";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import { AdSenseScript } from "@/components/ads/AdSenseScript";
+import { CookieConsent } from "@/components/ads/CookieConsent";
+import { OG_IMAGE, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 import { themeInitScript } from "@/lib/theme";
 
+const inter = Inter({
+  subsets: ["latin"],
+  display: "optional",
+  variable: "--font-inter",
+  adjustFontFallback: true,
+});
+
+const ADSENSE_CLIENT = process.env.NEXT_PUBLIC_ADSENSE_CLIENT ?? "";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Engineering Calculator — Kalkulator Teknik Online Gratis",
     template: "%s | Engineering Calculator",
   },
-  description:
-    "Kalkulator teknik online gratis untuk matematika, fisika, mekanika, elektro, sipil, biner, dan konversi satuan. Lengkap dengan rumus, langkah perhitungan, dan penjelasan variabel.",
+  description: SITE_DESCRIPTION,
   keywords: [
     "kalkulator teknik",
     "kalkulator online",
@@ -22,8 +34,23 @@ export const metadata: Metadata = {
     "kalkulator teknik elektro",
     "konversi satuan",
   ],
-  applicationName: "Engineering Calculator",
+  applicationName: SITE_NAME,
   category: "education",
+  openGraph: {
+    type: "website",
+    locale: "id_ID",
+    siteName: SITE_NAME,
+    url: "/",
+    title: "Engineering Calculator — Kalkulator Teknik Online Gratis",
+    description: SITE_DESCRIPTION,
+    images: [OG_IMAGE],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Engineering Calculator — Kalkulator Teknik Online Gratis",
+    description: SITE_DESCRIPTION,
+    images: [OG_IMAGE.url],
+  },
   robots: {
     index: true,
     follow: true,
@@ -46,7 +73,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="id" suppressHydrationWarning>
-      <body className="flex min-h-screen flex-col bg-slate-50 text-slate-900 antialiased">
+      <body
+        className={`${inter.variable} flex min-h-screen flex-col bg-slate-50 font-sans text-slate-900 antialiased`}
+      >
         <Script
           id="theme-init"
           strategy="beforeInteractive"
@@ -66,6 +95,10 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        {ADSENSE_CLIENT ? (
+          <AdSenseScript client={ADSENSE_CLIENT} />
+        ) : null}
+        {ADSENSE_CLIENT ? <CookieConsent /> : null}
       </body>
     </html>
   );

@@ -164,14 +164,19 @@ export function CalculatorLayout({
       </div>
 
       {formula || variables || example ? (
-        <div className={cn("mt-8 grid gap-5", variables ? "lg:grid-cols-2" : "")}>
+        <div
+          className={cn(
+            "defer-render mt-8 grid gap-5",
+            variables ? "lg:grid-cols-2" : "",
+          )}
+        >
           {formula}
           {variables}
           {example ? <div className="lg:col-span-2">{example}</div> : null}
         </div>
       ) : null}
 
-      {notes ? <div className="mt-8">{notes}</div> : null}
+      {notes ? <div className="defer-render mt-8">{notes}</div> : null}
     </div>
   );
 }
