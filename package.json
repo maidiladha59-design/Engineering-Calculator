@@ -14,9 +14,9 @@
     "audit:calculators": "node scripts/audit-calculators.mjs"
   },
   "dependencies": {
-    "katex": "^0.16.22",
+    "katex": "^0.18.2",
     "lucide-react": "1.70.0",
-    "next": "14.2.35",
+    "next": "15.5.28",
     "react": "18.3.1",
     "react-dom": "18.3.1"
   },
@@ -26,10 +26,10 @@
     "@types/react": "18.3.31",
     "@types/react-dom": "18.3.7",
     "eslint": "8.57.1",
-    "eslint-config-next": "14.2.35",
+    "eslint-config-next": "16.4.5",
     "postcss": "^8.5.32",
     "tailwindcss": "^4.1.13",
     "typescript": "^5.9.2",
-    "vitest": "^3.2.4"
+    "vitest": "^5.1.0"
   }
 }
